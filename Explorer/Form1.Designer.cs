@@ -29,51 +29,67 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Document");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Music");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Video");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Images");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("MyComputer", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Document", 4, 4);
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Music", 5, 5);
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Download", 2, 2);
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Folder 1", 1, 1);
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Folder 2", 1, 1);
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Images", 0, 0, new System.Windows.Forms.TreeNode[] {
+            treeNode11,
+            treeNode12});
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("My Computer", 3, 3, new System.Windows.Forms.TreeNode[] {
+            treeNode8,
+            treeNode9,
+            treeNode10,
+            treeNode13});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsb_Previous = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Next = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.rb_SortbyName = new System.Windows.Forms.RadioButton();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.tc_Home = new System.Windows.Forms.TabControl();
+            this.tc_Menu1 = new System.Windows.Forms.TabControl();
             this.tb_Home = new System.Windows.Forms.TabPage();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bnb_Create = new System.Windows.Forms.ToolStripButton();
-            this.bnb_Delete = new System.Windows.Forms.ToolStripButton();
-            this.bnb_previous = new System.Windows.Forms.ToolStripButton();
-            this.bnb_next = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.bnb_Cut = new System.Windows.Forms.ToolStripButton();
-            this.bnb_Paste = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Add = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Coppy = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Cut = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Paste = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Delete = new System.Windows.Forms.ToolStripButton();
             this.tb_View = new System.Windows.Forms.TabPage();
-            this.rb_Size = new System.Windows.Forms.RadioButton();
-            this.rb_Type = new System.Windows.Forms.RadioButton();
-            this.rb_Date = new System.Windows.Forms.RadioButton();
-            this.rb_Name = new System.Windows.Forms.RadioButton();
-            this.lb_Sort = new System.Windows.Forms.Label();
+            this.rb_Largeicon = new System.Windows.Forms.RadioButton();
+            this.rb_Smallicon = new System.Windows.Forms.RadioButton();
+            this.rb_Title = new System.Windows.Forms.RadioButton();
+            this.rb_Details = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tb_Memu2 = new System.Windows.Forms.TabControl();
+            this.tb_View1 = new System.Windows.Forms.TabPage();
+            this.tb_View2 = new System.Windows.Forms.TabPage();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.treeView2 = new System.Windows.Forms.TreeView();
+            this.tb_View3 = new System.Windows.Forms.TabPage();
+            this.treeView3 = new System.Windows.Forms.TreeView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tc_Home.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.tc_Menu1.SuspendLayout();
             this.tb_Home.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.tb_View.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tb_Memu2.SuspendLayout();
+            this.tb_View1.SuspendLayout();
+            this.tb_View2.SuspendLayout();
+            this.tb_View3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -84,33 +100,72 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(713, 403);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.tb_Memu2);
+            this.panel3.Controls.Add(this.toolStrip1);
+            this.panel3.Controls.Add(this.textBox1);
             this.panel3.Controls.Add(this.listView1);
-            this.panel3.Controls.Add(this.rb_SortbyName);
-            this.panel3.Controls.Add(this.treeView1);
-            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(705, 477);
+            this.panel3.Size = new System.Drawing.Size(713, 403);
             this.panel3.TabIndex = 3;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsb_Previous,
+            this.tsb_Next,
+            this.toolStripSeparator1});
+            this.toolStrip1.Location = new System.Drawing.Point(7, -2);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(64, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tsb_Previous
+            // 
+            this.tsb_Previous.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Previous.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Previous.Image")));
+            this.tsb_Previous.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Previous.Name = "tsb_Previous";
+            this.tsb_Previous.Size = new System.Drawing.Size(23, 22);
+            this.tsb_Previous.Text = "Back";
+            // 
+            // tsb_Next
+            // 
+            this.tsb_Next.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Next.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Next.Image")));
+            this.tsb_Next.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Next.Name = "tsb_Next";
+            this.tsb_Next.Size = new System.Drawing.Size(23, 22);
+            this.tsb_Next.Text = "Next";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(74, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(635, 20);
+            this.textBox1.TabIndex = 2;
             // 
             // listView1
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_name,
             this.ch_Date,
             this.ch_Type,
             this.ch_Size});
-            this.listView1.LargeImageList = this.imageList1;
-            this.listView1.Location = new System.Drawing.Point(202, 0);
+            this.listView1.Location = new System.Drawing.Point(202, 51);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(503, 477);
-            this.listView1.SmallImageList = this.imageList1;
+            this.listView1.Size = new System.Drawing.Size(511, 352);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -135,53 +190,16 @@
             this.ch_Size.Text = "Size";
             this.ch_Size.Width = 99;
             // 
-            // imageList1
+            // tc_Menu1
             // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // rb_SortbyName
-            // 
-            this.rb_SortbyName.AutoSize = true;
-            this.rb_SortbyName.Location = new System.Drawing.Point(322, 35);
-            this.rb_SortbyName.Name = "rb_SortbyName";
-            this.rb_SortbyName.Size = new System.Drawing.Size(87, 17);
-            this.rb_SortbyName.TabIndex = 0;
-            this.rb_SortbyName.TabStop = true;
-            this.rb_SortbyName.Text = "Sort by name";
-            this.rb_SortbyName.UseVisualStyleBackColor = true;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            treeNode1.Name = "tne_Document";
-            treeNode1.Text = "Document";
-            treeNode2.Name = "tne_Music";
-            treeNode2.Text = "Music";
-            treeNode3.Name = "tne_Video";
-            treeNode3.Text = "Video";
-            treeNode4.Name = "tne_Images";
-            treeNode4.Text = "Images";
-            treeNode5.Name = "tne_Computer";
-            treeNode5.Text = "MyComputer";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5});
-            this.treeView1.Size = new System.Drawing.Size(202, 477);
-            this.treeView1.TabIndex = 0;
-            // 
-            // tc_Home
-            // 
-            this.tc_Home.Controls.Add(this.tb_Home);
-            this.tc_Home.Controls.Add(this.tb_View);
-            this.tc_Home.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tc_Home.Location = new System.Drawing.Point(0, 0);
-            this.tc_Home.Name = "tc_Home";
-            this.tc_Home.SelectedIndex = 0;
-            this.tc_Home.Size = new System.Drawing.Size(713, 81);
-            this.tc_Home.TabIndex = 2;
+            this.tc_Menu1.Controls.Add(this.tb_Home);
+            this.tc_Menu1.Controls.Add(this.tb_View);
+            this.tc_Menu1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tc_Menu1.Location = new System.Drawing.Point(0, 0);
+            this.tc_Menu1.Name = "tc_Menu1";
+            this.tc_Menu1.SelectedIndex = 0;
+            this.tc_Menu1.Size = new System.Drawing.Size(713, 81);
+            this.tc_Menu1.TabIndex = 2;
             // 
             // tb_Home
             // 
@@ -196,97 +214,79 @@
             // 
             // bindingNavigator1
             // 
-            this.bindingNavigator1.AddNewItem = this.bnb_Create;
+            this.bindingNavigator1.AddNewItem = null;
             this.bindingNavigator1.CountItem = null;
-            this.bindingNavigator1.DeleteItem = this.bnb_Delete;
+            this.bindingNavigator1.DeleteItem = null;
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bindingNavigator1.ImageScalingSize = new System.Drawing.Size(30, 30);
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bnb_previous,
-            this.bnb_next,
-            this.bindingNavigatorSeparator2,
-            this.bnb_Create,
-            this.bnb_Delete,
-            this.bnb_Cut,
-            this.bnb_Paste});
+            this.tsb_Add,
+            this.tsb_Coppy,
+            this.tsb_Cut,
+            this.tsb_Paste,
+            this.tsb_Delete});
             this.bindingNavigator1.Location = new System.Drawing.Point(3, 3);
             this.bindingNavigator1.MoveFirstItem = null;
             this.bindingNavigator1.MoveLastItem = null;
-            this.bindingNavigator1.MoveNextItem = this.bnb_next;
-            this.bindingNavigator1.MovePreviousItem = this.bnb_previous;
+            this.bindingNavigator1.MoveNextItem = null;
+            this.bindingNavigator1.MovePreviousItem = null;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = null;
             this.bindingNavigator1.Size = new System.Drawing.Size(699, 49);
             this.bindingNavigator1.TabIndex = 0;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
-            // bnb_Create
+            // tsb_Add
             // 
-            this.bnb_Create.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bnb_Create.Image = ((System.Drawing.Image)(resources.GetObject("bnb_Create.Image")));
-            this.bnb_Create.ImageTransparentColor = System.Drawing.Color.Aqua;
-            this.bnb_Create.Name = "bnb_Create";
-            this.bnb_Create.Size = new System.Drawing.Size(23, 46);
-            this.bnb_Create.Text = "Add new";
+            this.tsb_Add.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Add.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Add.Image")));
+            this.tsb_Add.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Add.Name = "tsb_Add";
+            this.tsb_Add.Size = new System.Drawing.Size(34, 46);
+            this.tsb_Add.Text = "Add new item";
             // 
-            // bnb_Delete
+            // tsb_Coppy
             // 
-            this.bnb_Delete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bnb_Delete.Image = ((System.Drawing.Image)(resources.GetObject("bnb_Delete.Image")));
-            this.bnb_Delete.ImageTransparentColor = System.Drawing.Color.White;
-            this.bnb_Delete.Name = "bnb_Delete";
-            this.bnb_Delete.Size = new System.Drawing.Size(23, 46);
-            this.bnb_Delete.Text = "Delete";
+            this.tsb_Coppy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Coppy.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Coppy.Image")));
+            this.tsb_Coppy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Coppy.Name = "tsb_Coppy";
+            this.tsb_Coppy.Size = new System.Drawing.Size(34, 46);
+            this.tsb_Coppy.Text = "Coppy";
             // 
-            // bnb_previous
+            // tsb_Cut
             // 
-            this.bnb_previous.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bnb_previous.Image = ((System.Drawing.Image)(resources.GetObject("bnb_previous.Image")));
-            this.bnb_previous.ImageTransparentColor = System.Drawing.Color.White;
-            this.bnb_previous.Name = "bnb_previous";
-            this.bnb_previous.RightToLeftAutoMirrorImage = true;
-            this.bnb_previous.Size = new System.Drawing.Size(23, 46);
-            this.bnb_previous.Text = "Move previous";
+            this.tsb_Cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Cut.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Cut.Image")));
+            this.tsb_Cut.ImageTransparentColor = System.Drawing.Color.White;
+            this.tsb_Cut.Name = "tsb_Cut";
+            this.tsb_Cut.Size = new System.Drawing.Size(34, 46);
+            this.tsb_Cut.Text = "Cut";
             // 
-            // bnb_next
+            // tsb_Paste
             // 
-            this.bnb_next.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bnb_next.Image = ((System.Drawing.Image)(resources.GetObject("bnb_next.Image")));
-            this.bnb_next.ImageTransparentColor = System.Drawing.Color.White;
-            this.bnb_next.Name = "bnb_next";
-            this.bnb_next.RightToLeftAutoMirrorImage = true;
-            this.bnb_next.Size = new System.Drawing.Size(23, 46);
-            this.bnb_next.Text = "Move next";
+            this.tsb_Paste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Paste.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Paste.Image")));
+            this.tsb_Paste.ImageTransparentColor = System.Drawing.Color.White;
+            this.tsb_Paste.Name = "tsb_Paste";
+            this.tsb_Paste.Size = new System.Drawing.Size(34, 46);
+            this.tsb_Paste.Text = "Paste";
             // 
-            // bindingNavigatorSeparator2
+            // tsb_Delete
             // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 49);
-            // 
-            // bnb_Cut
-            // 
-            this.bnb_Cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bnb_Cut.Image = ((System.Drawing.Image)(resources.GetObject("bnb_Cut.Image")));
-            this.bnb_Cut.ImageTransparentColor = System.Drawing.Color.White;
-            this.bnb_Cut.Name = "bnb_Cut";
-            this.bnb_Cut.Size = new System.Drawing.Size(23, 46);
-            this.bnb_Cut.Text = "Cut";
-            // 
-            // bnb_Paste
-            // 
-            this.bnb_Paste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bnb_Paste.Image = ((System.Drawing.Image)(resources.GetObject("bnb_Paste.Image")));
-            this.bnb_Paste.ImageTransparentColor = System.Drawing.Color.White;
-            this.bnb_Paste.Name = "bnb_Paste";
-            this.bnb_Paste.Size = new System.Drawing.Size(23, 46);
-            this.bnb_Paste.Text = "Paste";
+            this.tsb_Delete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Delete.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Delete.Image")));
+            this.tsb_Delete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Delete.Name = "tsb_Delete";
+            this.tsb_Delete.Size = new System.Drawing.Size(34, 46);
+            this.tsb_Delete.Text = "Delete";
             // 
             // tb_View
             // 
-            this.tb_View.Controls.Add(this.rb_Size);
-            this.tb_View.Controls.Add(this.rb_Type);
-            this.tb_View.Controls.Add(this.rb_Date);
-            this.tb_View.Controls.Add(this.rb_Name);
-            this.tb_View.Controls.Add(this.lb_Sort);
+            this.tb_View.Controls.Add(this.rb_Largeicon);
+            this.tb_View.Controls.Add(this.rb_Smallicon);
+            this.tb_View.Controls.Add(this.rb_Title);
+            this.tb_View.Controls.Add(this.rb_Details);
             this.tb_View.Location = new System.Drawing.Point(4, 22);
             this.tb_View.Name = "tb_View";
             this.tb_View.Padding = new System.Windows.Forms.Padding(3);
@@ -295,57 +295,47 @@
             this.tb_View.Text = "View";
             this.tb_View.UseVisualStyleBackColor = true;
             // 
-            // rb_Size
+            // rb_Largeicon
             // 
-            this.rb_Size.AutoSize = true;
-            this.rb_Size.Location = new System.Drawing.Point(107, 29);
-            this.rb_Size.Name = "rb_Size";
-            this.rb_Size.Size = new System.Drawing.Size(45, 17);
-            this.rb_Size.TabIndex = 4;
-            this.rb_Size.Text = "Size";
-            this.rb_Size.UseVisualStyleBackColor = true;
+            this.rb_Largeicon.AutoSize = true;
+            this.rb_Largeicon.Location = new System.Drawing.Point(65, 29);
+            this.rb_Largeicon.Name = "rb_Largeicon";
+            this.rb_Largeicon.Size = new System.Drawing.Size(76, 17);
+            this.rb_Largeicon.TabIndex = 4;
+            this.rb_Largeicon.Text = "Large Icon";
+            this.rb_Largeicon.UseVisualStyleBackColor = true;
             // 
-            // rb_Type
+            // rb_Smallicon
             // 
-            this.rb_Type.AutoSize = true;
-            this.rb_Type.Location = new System.Drawing.Point(107, 6);
-            this.rb_Type.Name = "rb_Type";
-            this.rb_Type.Size = new System.Drawing.Size(49, 17);
-            this.rb_Type.TabIndex = 3;
-            this.rb_Type.Text = "Type";
-            this.rb_Type.UseVisualStyleBackColor = true;
+            this.rb_Smallicon.AutoSize = true;
+            this.rb_Smallicon.Location = new System.Drawing.Point(65, 6);
+            this.rb_Smallicon.Name = "rb_Smallicon";
+            this.rb_Smallicon.Size = new System.Drawing.Size(74, 17);
+            this.rb_Smallicon.TabIndex = 3;
+            this.rb_Smallicon.Text = "Small Icon";
+            this.rb_Smallicon.UseVisualStyleBackColor = true;
             // 
-            // rb_Date
+            // rb_Title
             // 
-            this.rb_Date.AutoSize = true;
-            this.rb_Date.Location = new System.Drawing.Point(48, 29);
-            this.rb_Date.Name = "rb_Date";
-            this.rb_Date.Size = new System.Drawing.Size(48, 17);
-            this.rb_Date.TabIndex = 2;
-            this.rb_Date.Text = "Date";
-            this.rb_Date.UseVisualStyleBackColor = true;
+            this.rb_Title.AutoSize = true;
+            this.rb_Title.Location = new System.Drawing.Point(6, 29);
+            this.rb_Title.Name = "rb_Title";
+            this.rb_Title.Size = new System.Drawing.Size(45, 17);
+            this.rb_Title.TabIndex = 2;
+            this.rb_Title.Text = "Title";
+            this.rb_Title.UseVisualStyleBackColor = true;
             // 
-            // rb_Name
+            // rb_Details
             // 
-            this.rb_Name.AutoSize = true;
-            this.rb_Name.Checked = true;
-            this.rb_Name.Location = new System.Drawing.Point(48, 6);
-            this.rb_Name.Name = "rb_Name";
-            this.rb_Name.Size = new System.Drawing.Size(53, 17);
-            this.rb_Name.TabIndex = 1;
-            this.rb_Name.TabStop = true;
-            this.rb_Name.Text = "Name";
-            this.rb_Name.UseVisualStyleBackColor = true;
-            // 
-            // lb_Sort
-            // 
-            this.lb_Sort.AutoSize = true;
-            this.lb_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_Sort.Location = new System.Drawing.Point(3, 13);
-            this.lb_Sort.Name = "lb_Sort";
-            this.lb_Sort.Size = new System.Drawing.Size(39, 20);
-            this.lb_Sort.TabIndex = 0;
-            this.lb_Sort.Text = "Sort";
+            this.rb_Details.AutoSize = true;
+            this.rb_Details.Checked = true;
+            this.rb_Details.Location = new System.Drawing.Point(6, 6);
+            this.rb_Details.Name = "rb_Details";
+            this.rb_Details.Size = new System.Drawing.Size(57, 17);
+            this.rb_Details.TabIndex = 1;
+            this.rb_Details.TabStop = true;
+            this.rb_Details.Text = "Details";
+            this.rb_Details.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -356,19 +346,133 @@
             this.panel2.Size = new System.Drawing.Size(713, 403);
             this.panel2.TabIndex = 3;
             // 
+            // tb_Memu2
+            // 
+            this.tb_Memu2.Controls.Add(this.tb_View1);
+            this.tb_Memu2.Controls.Add(this.tb_View2);
+            this.tb_Memu2.Controls.Add(this.tb_View3);
+            this.tb_Memu2.Location = new System.Drawing.Point(0, 29);
+            this.tb_Memu2.Name = "tb_Memu2";
+            this.tb_Memu2.SelectedIndex = 0;
+            this.tb_Memu2.Size = new System.Drawing.Size(200, 374);
+            this.tb_Memu2.TabIndex = 3;
+            // 
+            // tb_View1
+            // 
+            this.tb_View1.Controls.Add(this.treeView1);
+            this.tb_View1.Location = new System.Drawing.Point(4, 22);
+            this.tb_View1.Name = "tb_View1";
+            this.tb_View1.Padding = new System.Windows.Forms.Padding(3);
+            this.tb_View1.Size = new System.Drawing.Size(192, 348);
+            this.tb_View1.TabIndex = 0;
+            this.tb_View1.Text = "CheDo1";
+            this.tb_View1.UseVisualStyleBackColor = true;
+            // 
+            // tb_View2
+            // 
+            this.tb_View2.Controls.Add(this.treeView2);
+            this.tb_View2.Location = new System.Drawing.Point(4, 22);
+            this.tb_View2.Name = "tb_View2";
+            this.tb_View2.Padding = new System.Windows.Forms.Padding(3);
+            this.tb_View2.Size = new System.Drawing.Size(192, 348);
+            this.tb_View2.TabIndex = 1;
+            this.tb_View2.Text = "CheDo2";
+            this.tb_View2.UseVisualStyleBackColor = true;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.Location = new System.Drawing.Point(3, 3);
+            this.treeView1.Name = "treeView1";
+            treeNode8.ImageIndex = 4;
+            treeNode8.Name = "tc1_ChildDocument";
+            treeNode8.SelectedImageIndex = 4;
+            treeNode8.Text = "Document";
+            treeNode9.ImageIndex = 5;
+            treeNode9.Name = "tc1_ChildMusic";
+            treeNode9.SelectedImageIndex = 5;
+            treeNode9.Text = "Music";
+            treeNode10.ImageIndex = 2;
+            treeNode10.Name = "tc1_ChildDownload";
+            treeNode10.SelectedImageIndex = 2;
+            treeNode10.Text = "Download";
+            treeNode11.ImageIndex = 1;
+            treeNode11.Name = "tc1_ChildImage_Folder2";
+            treeNode11.SelectedImageIndex = 1;
+            treeNode11.Text = "Folder 1";
+            treeNode12.ImageIndex = 1;
+            treeNode12.Name = "tc1_ChildImage_Folder1";
+            treeNode12.SelectedImageIndex = 1;
+            treeNode12.Text = "Folder 2";
+            treeNode13.ImageIndex = 0;
+            treeNode13.Name = "tc1_ChildImages";
+            treeNode13.SelectedImageIndex = 0;
+            treeNode13.Text = "Images";
+            treeNode14.ImageIndex = 3;
+            treeNode14.Name = "tc1_NodeComputer";
+            treeNode14.SelectedImageIndex = 3;
+            treeNode14.Text = "My Computer";
+            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode14});
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.Size = new System.Drawing.Size(186, 342);
+            this.treeView1.TabIndex = 0;
+            // 
+            // treeView2
+            // 
+            this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView2.Location = new System.Drawing.Point(3, 3);
+            this.treeView2.Name = "treeView2";
+            this.treeView2.Size = new System.Drawing.Size(186, 342);
+            this.treeView2.TabIndex = 0;
+            // 
+            // tb_View3
+            // 
+            this.tb_View3.Controls.Add(this.treeView3);
+            this.tb_View3.Location = new System.Drawing.Point(4, 22);
+            this.tb_View3.Name = "tb_View3";
+            this.tb_View3.Padding = new System.Windows.Forms.Padding(3);
+            this.tb_View3.Size = new System.Drawing.Size(192, 348);
+            this.tb_View3.TabIndex = 2;
+            this.tb_View3.Text = "CheDo3";
+            this.tb_View3.UseVisualStyleBackColor = true;
+            // 
+            // treeView3
+            // 
+            this.treeView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView3.Location = new System.Drawing.Point(3, 3);
+            this.treeView3.Name = "treeView3";
+            this.treeView3.Size = new System.Drawing.Size(186, 342);
+            this.treeView3.TabIndex = 0;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "images.png");
+            this.imageList1.Images.SetKeyName(1, "folder.png");
+            this.imageList1.Images.SetKeyName(2, "download.png");
+            this.imageList1.Images.SetKeyName(3, "pc.png");
+            this.imageList1.Images.SetKeyName(4, "document.png");
+            this.imageList1.Images.SetKeyName(5, "music.png");
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 484);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.tc_Home);
+            this.Controls.Add(this.tc_Menu1);
             this.Name = "Form1";
             this.Text = "Explorer";
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.tc_Home.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.tc_Menu1.ResumeLayout(false);
             this.tb_Home.ResumeLayout(false);
             this.tb_Home.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
@@ -377,6 +481,10 @@
             this.tb_View.ResumeLayout(false);
             this.tb_View.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.tb_Memu2.ResumeLayout(false);
+            this.tb_View1.ResumeLayout(false);
+            this.tb_View2.ResumeLayout(false);
+            this.tb_View3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -386,9 +494,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.TabControl tc_Home;
+        private System.Windows.Forms.TabControl tc_Menu1;
         private System.Windows.Forms.TabPage tb_Home;
         private System.Windows.Forms.TabPage tb_View;
         private System.Windows.Forms.Panel panel2;
@@ -396,20 +502,29 @@
         private System.Windows.Forms.ColumnHeader ch_Date;
         private System.Windows.Forms.ColumnHeader ch_Type;
         private System.Windows.Forms.ColumnHeader ch_Size;
-        private System.Windows.Forms.RadioButton rb_SortbyName;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
-        private System.Windows.Forms.ToolStripButton bnb_Create;
-        private System.Windows.Forms.ToolStripButton bnb_Delete;
-        private System.Windows.Forms.ToolStripButton bnb_previous;
-        private System.Windows.Forms.ToolStripButton bnb_next;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-        private System.Windows.Forms.ToolStripButton bnb_Cut;
-        private System.Windows.Forms.ToolStripButton bnb_Paste;
-        private System.Windows.Forms.Label lb_Sort;
-        private System.Windows.Forms.RadioButton rb_Name;
-        private System.Windows.Forms.RadioButton rb_Size;
-        private System.Windows.Forms.RadioButton rb_Type;
-        private System.Windows.Forms.RadioButton rb_Date;
+        private System.Windows.Forms.ToolStripButton tsb_Cut;
+        private System.Windows.Forms.ToolStripButton tsb_Paste;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton tsb_Previous;
+        private System.Windows.Forms.ToolStripButton tsb_Next;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton tsb_Coppy;
+        private System.Windows.Forms.ToolStripButton tsb_Delete;
+        private System.Windows.Forms.ToolStripButton tsb_Add;
+        private System.Windows.Forms.RadioButton rb_Largeicon;
+        private System.Windows.Forms.RadioButton rb_Smallicon;
+        private System.Windows.Forms.RadioButton rb_Title;
+        private System.Windows.Forms.RadioButton rb_Details;
+        private System.Windows.Forms.TabControl tb_Memu2;
+        private System.Windows.Forms.TabPage tb_View1;
+        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TabPage tb_View2;
+        private System.Windows.Forms.TreeView treeView2;
+        private System.Windows.Forms.TabPage tb_View3;
+        private System.Windows.Forms.TreeView treeView3;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
