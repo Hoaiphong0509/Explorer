@@ -15,9 +15,9 @@ namespace Explorer
 {
     public partial class Form1 : Form
     {
-        //static string Path = Application.StartupPath + @"..\..\..\";
-        static string Path = @"D:\";
-        DirectoryInfo directoryInfo = new DirectoryInfo(Path);
+        //static string strPath = Application.StartupPath + @"..\..\..\";
+        static string strPath = @"D:\";
+        DirectoryInfo directoryInfo = new DirectoryInfo(strPath);
         public Form1()
         {
             InitializeComponent();
@@ -27,8 +27,6 @@ namespace Explorer
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             
-            //DirectoryInfo directoryInfo = new DirectoryInfo(Application.StartupPath + @"..\..");
-            //
         }
 
         private void InitTreeView(TreeView treeView)
@@ -48,17 +46,19 @@ namespace Explorer
 
         private void LoadTreeNode(TreeNode treeNode)
         {
-            DirectoryInfo directoryInfo = Directory.CreateDirectory(Path + treeNode.FullPath);
+            DirectoryInfo directoryInfo = Directory.CreateDirectory(strPath + treeNode.FullPath);
 
             try
             {
-                Directory.GetAccessControl(Path + treeNode.FullPath);
+                DirectorySecurity security = Directory.GetAccessControl(strPath + treeNode.FullPath);
+                security.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
             }
             catch (Exception)
             {
+                treeNode.Remove();
                 return;
             }
-            
+
             foreach (var item in directoryInfo.GetDirectories())
             {
                 TreeNode temp_Node = new TreeNode(item.Name);
@@ -69,8 +69,42 @@ namespace Explorer
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            //Console.WriteLine(Path + treeView1.SelectedNode.FullPath);
-            //Console.WriteLine(Path + e.Node.FullPath);
+            Console.WriteLine("CLick");
+            treeView1.SelectedNode = e.Node;
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            txtPath.Text = "\\" + e.Node.FullPath;
+
+            listView1.Items.Clear();
+            string[] Files = Directory.GetFiles(strPath + e.Node.FullPath);
+            foreach (var item in Files)
+            {
+                FileInfo fileInfo = new FileInfo(item);
+                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), fileInfo.Extension, fileInfo.Length.ToString()}));
+            }
+
+            foreach (var item in e.Node.Nodes)
+            {
+                listView1.Items.Add(((TreeNode)item).Text);
+            }
+        }
+
+        private void listView1_ItemActivate(object sender, EventArgs e)
+        {
+            //Console.WriteLine("Active");
+            //ListView item = (ListView)sender;
+            
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListView item = (ListView)sender;
+            //item.SelectedItems[0].Text;
+            
+
+
         }
     }
 }
