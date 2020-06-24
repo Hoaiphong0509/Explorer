@@ -29,22 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Document", 4, 4);
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Music", 5, 5);
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Download", 2, 2);
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Folder 1", 1, 1);
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Folder 2", 1, 1);
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Images", 0, 0, new System.Windows.Forms.TreeNode[] {
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("My Computer", 3, 3, new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10,
-            treeNode13});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.tb_Memu2 = new System.Windows.Forms.TabControl();
+            this.tb_View1 = new System.Windows.Forms.TabPage();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.tb_View2 = new System.Windows.Forms.TabPage();
+            this.treeView2 = new System.Windows.Forms.TreeView();
+            this.tb_View3 = new System.Windows.Forms.TabPage();
+            this.treeView3 = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Previous = new System.Windows.Forms.ToolStripButton();
             this.tsb_Next = new System.Windows.Forms.ToolStripButton();
@@ -69,16 +64,12 @@
             this.rb_Title = new System.Windows.Forms.RadioButton();
             this.rb_Details = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.tb_Memu2 = new System.Windows.Forms.TabControl();
-            this.tb_View1 = new System.Windows.Forms.TabPage();
-            this.tb_View2 = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.treeView2 = new System.Windows.Forms.TreeView();
-            this.tb_View3 = new System.Windows.Forms.TabPage();
-            this.treeView3 = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.tb_Memu2.SuspendLayout();
+            this.tb_View1.SuspendLayout();
+            this.tb_View2.SuspendLayout();
+            this.tb_View3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tc_Menu1.SuspendLayout();
             this.tb_Home.SuspendLayout();
@@ -86,10 +77,6 @@
             this.bindingNavigator1.SuspendLayout();
             this.tb_View.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.tb_Memu2.SuspendLayout();
-            this.tb_View1.SuspendLayout();
-            this.tb_View2.SuspendLayout();
-            this.tb_View3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -112,6 +99,90 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(713, 403);
             this.panel3.TabIndex = 3;
+            // 
+            // tb_Memu2
+            // 
+            this.tb_Memu2.Controls.Add(this.tb_View1);
+            this.tb_Memu2.Controls.Add(this.tb_View2);
+            this.tb_Memu2.Controls.Add(this.tb_View3);
+            this.tb_Memu2.Location = new System.Drawing.Point(0, 29);
+            this.tb_Memu2.Name = "tb_Memu2";
+            this.tb_Memu2.SelectedIndex = 0;
+            this.tb_Memu2.Size = new System.Drawing.Size(200, 374);
+            this.tb_Memu2.TabIndex = 3;
+            // 
+            // tb_View1
+            // 
+            this.tb_View1.Controls.Add(this.treeView1);
+            this.tb_View1.Location = new System.Drawing.Point(4, 22);
+            this.tb_View1.Name = "tb_View1";
+            this.tb_View1.Padding = new System.Windows.Forms.Padding(3);
+            this.tb_View1.Size = new System.Drawing.Size(192, 348);
+            this.tb_View1.TabIndex = 0;
+            this.tb_View1.Text = "CheDo1";
+            this.tb_View1.UseVisualStyleBackColor = true;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.Location = new System.Drawing.Point(3, 3);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.Size = new System.Drawing.Size(186, 342);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "images.png");
+            this.imageList1.Images.SetKeyName(1, "folder.png");
+            this.imageList1.Images.SetKeyName(2, "download.png");
+            this.imageList1.Images.SetKeyName(3, "pc.png");
+            this.imageList1.Images.SetKeyName(4, "document.png");
+            this.imageList1.Images.SetKeyName(5, "music.png");
+            // 
+            // tb_View2
+            // 
+            this.tb_View2.Controls.Add(this.treeView2);
+            this.tb_View2.Location = new System.Drawing.Point(4, 22);
+            this.tb_View2.Name = "tb_View2";
+            this.tb_View2.Padding = new System.Windows.Forms.Padding(3);
+            this.tb_View2.Size = new System.Drawing.Size(192, 348);
+            this.tb_View2.TabIndex = 1;
+            this.tb_View2.Text = "CheDo2";
+            this.tb_View2.UseVisualStyleBackColor = true;
+            // 
+            // treeView2
+            // 
+            this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView2.Location = new System.Drawing.Point(3, 3);
+            this.treeView2.Name = "treeView2";
+            this.treeView2.Size = new System.Drawing.Size(186, 342);
+            this.treeView2.TabIndex = 0;
+            // 
+            // tb_View3
+            // 
+            this.tb_View3.Controls.Add(this.treeView3);
+            this.tb_View3.Location = new System.Drawing.Point(4, 22);
+            this.tb_View3.Name = "tb_View3";
+            this.tb_View3.Padding = new System.Windows.Forms.Padding(3);
+            this.tb_View3.Size = new System.Drawing.Size(192, 348);
+            this.tb_View3.TabIndex = 2;
+            this.tb_View3.Text = "CheDo3";
+            this.tb_View3.UseVisualStyleBackColor = true;
+            // 
+            // treeView3
+            // 
+            this.treeView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView3.Location = new System.Drawing.Point(3, 3);
+            this.treeView3.Name = "treeView3";
+            this.treeView3.Size = new System.Drawing.Size(186, 342);
+            this.treeView3.TabIndex = 0;
             // 
             // toolStrip1
             // 
@@ -163,6 +234,7 @@
             this.ch_Date,
             this.ch_Type,
             this.ch_Size});
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(202, 51);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(511, 352);
@@ -346,118 +418,6 @@
             this.panel2.Size = new System.Drawing.Size(713, 403);
             this.panel2.TabIndex = 3;
             // 
-            // tb_Memu2
-            // 
-            this.tb_Memu2.Controls.Add(this.tb_View1);
-            this.tb_Memu2.Controls.Add(this.tb_View2);
-            this.tb_Memu2.Controls.Add(this.tb_View3);
-            this.tb_Memu2.Location = new System.Drawing.Point(0, 29);
-            this.tb_Memu2.Name = "tb_Memu2";
-            this.tb_Memu2.SelectedIndex = 0;
-            this.tb_Memu2.Size = new System.Drawing.Size(200, 374);
-            this.tb_Memu2.TabIndex = 3;
-            // 
-            // tb_View1
-            // 
-            this.tb_View1.Controls.Add(this.treeView1);
-            this.tb_View1.Location = new System.Drawing.Point(4, 22);
-            this.tb_View1.Name = "tb_View1";
-            this.tb_View1.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_View1.Size = new System.Drawing.Size(192, 348);
-            this.tb_View1.TabIndex = 0;
-            this.tb_View1.Text = "CheDo1";
-            this.tb_View1.UseVisualStyleBackColor = true;
-            // 
-            // tb_View2
-            // 
-            this.tb_View2.Controls.Add(this.treeView2);
-            this.tb_View2.Location = new System.Drawing.Point(4, 22);
-            this.tb_View2.Name = "tb_View2";
-            this.tb_View2.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_View2.Size = new System.Drawing.Size(192, 348);
-            this.tb_View2.TabIndex = 1;
-            this.tb_View2.Text = "CheDo2";
-            this.tb_View2.UseVisualStyleBackColor = true;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            treeNode8.ImageIndex = 4;
-            treeNode8.Name = "tc1_ChildDocument";
-            treeNode8.SelectedImageIndex = 4;
-            treeNode8.Text = "Document";
-            treeNode9.ImageIndex = 5;
-            treeNode9.Name = "tc1_ChildMusic";
-            treeNode9.SelectedImageIndex = 5;
-            treeNode9.Text = "Music";
-            treeNode10.ImageIndex = 2;
-            treeNode10.Name = "tc1_ChildDownload";
-            treeNode10.SelectedImageIndex = 2;
-            treeNode10.Text = "Download";
-            treeNode11.ImageIndex = 1;
-            treeNode11.Name = "tc1_ChildImage_Folder2";
-            treeNode11.SelectedImageIndex = 1;
-            treeNode11.Text = "Folder 1";
-            treeNode12.ImageIndex = 1;
-            treeNode12.Name = "tc1_ChildImage_Folder1";
-            treeNode12.SelectedImageIndex = 1;
-            treeNode12.Text = "Folder 2";
-            treeNode13.ImageIndex = 0;
-            treeNode13.Name = "tc1_ChildImages";
-            treeNode13.SelectedImageIndex = 0;
-            treeNode13.Text = "Images";
-            treeNode14.ImageIndex = 3;
-            treeNode14.Name = "tc1_NodeComputer";
-            treeNode14.SelectedImageIndex = 3;
-            treeNode14.Text = "My Computer";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode14});
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(186, 342);
-            this.treeView1.TabIndex = 0;
-            // 
-            // treeView2
-            // 
-            this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView2.Location = new System.Drawing.Point(3, 3);
-            this.treeView2.Name = "treeView2";
-            this.treeView2.Size = new System.Drawing.Size(186, 342);
-            this.treeView2.TabIndex = 0;
-            // 
-            // tb_View3
-            // 
-            this.tb_View3.Controls.Add(this.treeView3);
-            this.tb_View3.Location = new System.Drawing.Point(4, 22);
-            this.tb_View3.Name = "tb_View3";
-            this.tb_View3.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_View3.Size = new System.Drawing.Size(192, 348);
-            this.tb_View3.TabIndex = 2;
-            this.tb_View3.Text = "CheDo3";
-            this.tb_View3.UseVisualStyleBackColor = true;
-            // 
-            // treeView3
-            // 
-            this.treeView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView3.Location = new System.Drawing.Point(3, 3);
-            this.treeView3.Name = "treeView3";
-            this.treeView3.Size = new System.Drawing.Size(186, 342);
-            this.treeView3.TabIndex = 0;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "images.png");
-            this.imageList1.Images.SetKeyName(1, "folder.png");
-            this.imageList1.Images.SetKeyName(2, "download.png");
-            this.imageList1.Images.SetKeyName(3, "pc.png");
-            this.imageList1.Images.SetKeyName(4, "document.png");
-            this.imageList1.Images.SetKeyName(5, "music.png");
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -470,6 +430,10 @@
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.tb_Memu2.ResumeLayout(false);
+            this.tb_View1.ResumeLayout(false);
+            this.tb_View2.ResumeLayout(false);
+            this.tb_View3.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tc_Menu1.ResumeLayout(false);
@@ -481,10 +445,6 @@
             this.tb_View.ResumeLayout(false);
             this.tb_View.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.tb_Memu2.ResumeLayout(false);
-            this.tb_View1.ResumeLayout(false);
-            this.tb_View2.ResumeLayout(false);
-            this.tb_View3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

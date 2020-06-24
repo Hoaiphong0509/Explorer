@@ -7,3 +7,13 @@ c:\users\nguye\documents\visual studio 2015\Projects\Explorer\Explorer\obj\Debug
 c:\users\nguye\documents\visual studio 2015\Projects\Explorer\Explorer\obj\Debug\Explorer.exe
 c:\users\nguye\documents\visual studio 2015\Projects\Explorer\Explorer\obj\Debug\Explorer.pdb
 C:\Users\nguye\Documents\Visual Studio 2015\Projects\Explorer\Explorer\obj\Debug\Explorer.csprojResolveAssemblyReference.cache
+D:\Topic\Explorer\Explorer\bin\Debug\Explorer.exe.config
+D:\Topic\Explorer\Explorer\bin\Debug\Explorer.exe
+D:\Topic\Explorer\Explorer\bin\Debug\Explorer.pdb
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.csprojAssemblyReference.cache
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.Form1.resources
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.Properties.Resources.resources
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.csproj.GenerateResource.cache
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.csproj.CoreCompileInputs.cache
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.exe
+D:\Topic\Explorer\Explorer\obj\Debug\Explorer.pdb
