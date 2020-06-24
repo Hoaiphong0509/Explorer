@@ -135,8 +135,8 @@
             this.treeView1.Size = new System.Drawing.Size(186, 342);
             this.treeView1.TabIndex = 0;
             this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
             // 
             // imageList1
             // 
@@ -381,6 +381,7 @@
             this.rb_Largeicon.TabIndex = 4;
             this.rb_Largeicon.Text = "Large Icon";
             this.rb_Largeicon.UseVisualStyleBackColor = true;
+            this.rb_Largeicon.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // rb_Smallicon
             // 
@@ -391,6 +392,7 @@
             this.rb_Smallicon.TabIndex = 3;
             this.rb_Smallicon.Text = "Small Icon";
             this.rb_Smallicon.UseVisualStyleBackColor = true;
+            this.rb_Smallicon.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // rb_Title
             // 
@@ -401,6 +403,7 @@
             this.rb_Title.TabIndex = 2;
             this.rb_Title.Text = "Title";
             this.rb_Title.UseVisualStyleBackColor = true;
+            this.rb_Title.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // rb_Details
             // 
@@ -413,6 +416,7 @@
             this.rb_Details.TabStop = true;
             this.rb_Details.Text = "Details";
             this.rb_Details.UseVisualStyleBackColor = true;
+            this.rb_Details.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
             // panel2
             // 

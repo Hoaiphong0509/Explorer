@@ -69,23 +69,24 @@ namespace Explorer
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            Console.WriteLine("CLick");
             treeView1.SelectedNode = e.Node;
+            LoadFolder(e.Node);
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        // Load thư Listview khi click hoặc ấn Enter.
+        private void LoadFolder(TreeNode treeNode)
         {
-            txtPath.Text = "\\" + e.Node.FullPath;
+            txtPath.Text = "\\" + treeNode.FullPath;
 
             listView1.Items.Clear();
-            string[] Files = Directory.GetFiles(strPath + e.Node.FullPath);
+            string[] Files = Directory.GetFiles(strPath + treeNode.FullPath);
             foreach (var item in Files)
             {
                 FileInfo fileInfo = new FileInfo(item);
-                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), fileInfo.Extension, fileInfo.Length.ToString()}));
+                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), fileInfo.Extension, fileInfo.Length.ToString() }));
             }
 
-            foreach (var item in e.Node.Nodes)
+            foreach (var item in treeNode.Nodes)
             {
                 listView1.Items.Add(((TreeNode)item).Text);
             }
@@ -95,7 +96,7 @@ namespace Explorer
         {
             //Console.WriteLine("Active");
             //ListView item = (ListView)sender;
-            
+
         }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -105,6 +106,47 @@ namespace Explorer
             
 
 
+        }
+
+        private void treeView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (treeView1.SelectedNode != null)
+                {
+                    LoadFolder(treeView1.SelectedNode);
+                }
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            if (radioButton.Checked == true)
+            {
+                int rdbType = 0;
+                switch (radioButton.Text)
+                {
+                    case "Small Icon":
+                        listView1.View = View.SmallIcon;
+                        rdbType = 1;
+                        break;
+                    case "Title":
+                        listView1.View = View.Tile;
+                        rdbType = 2;
+                        break;
+                    case "Large Icon":
+                        listView1.View = View.LargeIcon;
+                        rdbType = 3;
+                        break;
+                    default:
+                        listView1.View = View.Details;
+                        rdbType = 0;
+                        break;
+                }
+            }
         }
     }
 }
