@@ -97,7 +97,7 @@ namespace Explorer
             foreach (var item in Files)
             {
                 FileInfo fileInfo = new FileInfo(item);
-                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), GetNameTypeFormExtension(fileInfo.Extension), fileInfo.Length.ToString() }));
+                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), GetNameTypeFormExtension(fileInfo.Extension), GetSizeString(fileInfo.Length) }));
             }
 
             foreach (var item in Directory.GetDirectories(strPath))
@@ -144,6 +144,28 @@ namespace Explorer
 
             NameTypeofExtension.Add(ext, temp2);
             return temp2;
+        }
+
+        private string GetSizeString(long sizefile)
+        {
+
+
+            if (sizefile > 573741824)
+            {
+                return Math.Round(((double)sizefile / 1073741824),2) + " GB";
+            }
+            else if (sizefile > 3145728)
+            {
+                return Math.Round(((double)sizefile / 1048576), 2) + " MB";
+            }
+            else if (sizefile > 1024)
+            {
+                return Math.Round(((double)sizefile / 1024), 2) + " KB";
+            }
+            else
+            {
+                return sizefile.ToString();
+            }
         }
 
         private void listView1_ItemActivate(object sender, EventArgs e)
