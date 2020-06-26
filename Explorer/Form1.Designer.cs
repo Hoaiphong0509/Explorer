@@ -196,9 +196,10 @@
             this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(7, -2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(64, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(95, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // tsb_Previous
             // 
@@ -241,7 +242,9 @@
             this.listView1.Location = new System.Drawing.Point(202, 51);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(511, 352);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 1;
+            this.listView1.TabStop = false;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);

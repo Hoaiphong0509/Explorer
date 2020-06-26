@@ -10,23 +10,32 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Security.AccessControl;
+using System.Collections;
+using System.Web;
+using Microsoft.Win32;
 
 namespace Explorer
 {
     public partial class Form1 : Form
     {
-        //static string strPath = Application.StartupPath + @"..\..\..\";
-        static string strPath = @"D:\";
+        static string strPath = Application.StartupPath + @"..\..\..\";
+        //static string strPath = @"D:\";
+        static string strRoot = "root";
+        Stack<string> stack_Previous = new Stack<string>();
+        Stack<string> stack_Next = new Stack<string>();
         DirectoryInfo directoryInfo = new DirectoryInfo(strPath);
+
+        Dictionary<string, string> NameTypeofExtension = new Dictionary<string, string>();
         public Form1()
         {
             InitializeComponent();
             InitTreeView(treeView1);
+
+            
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
-            
         }
 
         private void InitTreeView(TreeView treeView)
@@ -76,20 +85,65 @@ namespace Explorer
         // Load thư Listview khi click hoặc ấn Enter.
         private void LoadFolder(TreeNode treeNode)
         {
-            txtPath.Text = "\\" + treeNode.FullPath;
+            txtPath.Text = strRoot + "\\" + treeNode.FullPath;
+            LoadListView(strPath + treeNode.FullPath);
 
+        }
+
+        private void LoadListView(string strPath)
+        {
             listView1.Items.Clear();
-            string[] Files = Directory.GetFiles(strPath + treeNode.FullPath);
+            string[] Files = Directory.GetFiles(strPath);
             foreach (var item in Files)
             {
                 FileInfo fileInfo = new FileInfo(item);
-                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), fileInfo.Extension, fileInfo.Length.ToString() }));
+                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), GetNameTypeFormExtension(fileInfo.Extension), fileInfo.Length.ToString() }));
             }
 
-            foreach (var item in treeNode.Nodes)
+            foreach (var item in Directory.GetDirectories(strPath))
             {
-                listView1.Items.Add(((TreeNode)item).Text);
+                DirectoryInfo directoryInfo = new DirectoryInfo(item);
+                listView1.Items.Add(new ListViewItem(new string[] { directoryInfo.Name, directoryInfo.LastWriteTime.ToString(), "Folder" }));
             }
+        }
+
+        private string GetNameTypeFormExtension(string ext)
+        {
+            if (NameTypeofExtension.ContainsKey(ext))
+            {
+                return NameTypeofExtension[ext];
+            }
+
+            string temp = null, temp2 = "File";
+            try
+            {
+                temp = (string)Registry.ClassesRoot.OpenSubKey(ext).GetValue("");
+
+                if (temp == null)
+                {
+                    temp = (string)Registry.ClassesRoot.OpenSubKey(ext).OpenSubKey("OpenWithProgids").GetValue("");
+                    if (temp == null)
+                    {
+                        temp = Registry.ClassesRoot.OpenSubKey(ext).OpenSubKey("OpenWithProgids").GetValueNames()[0];
+                        if (temp == null)
+                        {
+                            temp2 = ext.Substring(1).ToUpper() + " File";
+                        }
+                    }
+                }
+                else
+                {
+                    temp2 = Registry.ClassesRoot.OpenSubKey(temp).GetValue("").ToString();
+                }
+            }
+            catch (Exception)
+            {
+                NameTypeofExtension.Add(ext, ext.Substring(1).ToUpper() + " File");
+                return NameTypeofExtension[ext];
+            }
+
+            NameTypeofExtension.Add(ext, temp2);
+            return temp2;
         }
 
         private void listView1_ItemActivate(object sender, EventArgs e)
@@ -123,6 +177,7 @@ namespace Explorer
 
         private void rb_CheckedChanged(object sender, EventArgs e)
         {
+            
             RadioButton radioButton = (RadioButton)sender;
             if (radioButton.Checked == true)
             {
@@ -147,6 +202,20 @@ namespace Explorer
                         break;
                 }
             }
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Name == "tsb_Next")
+            {
+
+            }
+            else
+            {
+                string strPath = stack_Next.Pop();
+
+            }
+            
         }
     }
 }
