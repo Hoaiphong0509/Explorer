@@ -32,11 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnGoto = new System.Windows.Forms.Button();
             this.tb_Memu2 = new System.Windows.Forms.TabControl();
             this.tb_View1 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.tb_View2 = new System.Windows.Forms.TabPage();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.tb_View3 = new System.Windows.Forms.TabPage();
             this.treeView3 = new System.Windows.Forms.TreeView();
@@ -50,6 +52,7 @@
             this.ch_Date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tc_Menu1 = new System.Windows.Forms.TabControl();
             this.tb_Home = new System.Windows.Forms.TabPage();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
@@ -59,6 +62,11 @@
             this.tsb_Paste = new System.Windows.Forms.ToolStripButton();
             this.tsb_Delete = new System.Windows.Forms.ToolStripButton();
             this.tb_View = new System.Windows.Forms.TabPage();
+            this.cbShowHidden = new System.Windows.Forms.CheckBox();
+            this.cbShowImage = new System.Windows.Forms.CheckBox();
+            this.cbShowOther = new System.Windows.Forms.CheckBox();
+            this.cbShowFolder = new System.Windows.Forms.CheckBox();
+            this.lbView = new System.Windows.Forms.Label();
             this.rb_Largeicon = new System.Windows.Forms.RadioButton();
             this.rb_Smallicon = new System.Windows.Forms.RadioButton();
             this.rb_Title = new System.Windows.Forms.RadioButton();
@@ -90,6 +98,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.btnGoto);
             this.panel3.Controls.Add(this.tb_Memu2);
             this.panel3.Controls.Add(this.toolStrip1);
             this.panel3.Controls.Add(this.txtPath);
@@ -99,6 +108,17 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(713, 403);
             this.panel3.TabIndex = 3;
+            // 
+            // btnGoto
+            // 
+            this.btnGoto.Enabled = false;
+            this.btnGoto.Location = new System.Drawing.Point(660, 0);
+            this.btnGoto.Name = "btnGoto";
+            this.btnGoto.Size = new System.Drawing.Size(49, 21);
+            this.btnGoto.TabIndex = 4;
+            this.btnGoto.Text = "Goto";
+            this.btnGoto.UseVisualStyleBackColor = true;
+            this.btnGoto.Click += new System.EventHandler(this.btnGoto_Click);
             // 
             // tb_Memu2
             // 
@@ -110,6 +130,7 @@
             this.tb_Memu2.SelectedIndex = 0;
             this.tb_Memu2.Size = new System.Drawing.Size(200, 374);
             this.tb_Memu2.TabIndex = 3;
+            this.tb_Memu2.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tb_Memu2_Selecting);
             // 
             // tb_View1
             // 
@@ -124,10 +145,11 @@
             // 
             // treeView1
             // 
+            this.treeView1.CheckBoxes = true;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.FullRowSelect = true;
             this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.ImageList = this.imageList2;
             this.treeView1.Location = new System.Drawing.Point(3, 3);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
@@ -138,19 +160,15 @@
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
             // 
-            // imageList1
+            // imageList2
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "images.png");
-            this.imageList1.Images.SetKeyName(1, "folder.png");
-            this.imageList1.Images.SetKeyName(2, "download.png");
-            this.imageList1.Images.SetKeyName(3, "pc.png");
-            this.imageList1.Images.SetKeyName(4, "document.png");
-            this.imageList1.Images.SetKeyName(5, "music.png");
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "folder.png");
             // 
             // tb_View2
             // 
+            this.tb_View2.Controls.Add(this.webBrowser);
             this.tb_View2.Controls.Add(this.treeView2);
             this.tb_View2.Location = new System.Drawing.Point(4, 22);
             this.tb_View2.Name = "tb_View2";
@@ -159,6 +177,15 @@
             this.tb_View2.TabIndex = 1;
             this.tb_View2.Text = "CheDo2";
             this.tb_View2.UseVisualStyleBackColor = true;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(186, 342);
+            this.webBrowser.TabIndex = 1;
             // 
             // treeView2
             // 
@@ -196,7 +223,7 @@
             this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(7, -2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(95, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(64, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
@@ -228,7 +255,7 @@
             // 
             this.txtPath.Location = new System.Drawing.Point(74, 0);
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(635, 20);
+            this.txtPath.Size = new System.Drawing.Size(580, 20);
             this.txtPath.TabIndex = 2;
             // 
             // listView1
@@ -269,6 +296,17 @@
             // 
             this.ch_Size.Text = "Size";
             this.ch_Size.Width = 99;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "images.png");
+            this.imageList1.Images.SetKeyName(1, "folder.png");
+            this.imageList1.Images.SetKeyName(2, "download.png");
+            this.imageList1.Images.SetKeyName(3, "pc.png");
+            this.imageList1.Images.SetKeyName(4, "document.png");
+            this.imageList1.Images.SetKeyName(5, "music.png");
             // 
             // tc_Menu1
             // 
@@ -324,6 +362,7 @@
             this.tsb_Add.Name = "tsb_Add";
             this.tsb_Add.Size = new System.Drawing.Size(34, 46);
             this.tsb_Add.Text = "Add new item";
+            this.tsb_Add.Click += new System.EventHandler(this.tsb_Add_Click);
             // 
             // tsb_Coppy
             // 
@@ -360,9 +399,15 @@
             this.tsb_Delete.Name = "tsb_Delete";
             this.tsb_Delete.Size = new System.Drawing.Size(34, 46);
             this.tsb_Delete.Text = "Delete";
+            this.tsb_Delete.Click += new System.EventHandler(this.tsb_Delete_Click);
             // 
             // tb_View
             // 
+            this.tb_View.Controls.Add(this.cbShowHidden);
+            this.tb_View.Controls.Add(this.cbShowImage);
+            this.tb_View.Controls.Add(this.cbShowOther);
+            this.tb_View.Controls.Add(this.cbShowFolder);
+            this.tb_View.Controls.Add(this.lbView);
             this.tb_View.Controls.Add(this.rb_Largeicon);
             this.tb_View.Controls.Add(this.rb_Smallicon);
             this.tb_View.Controls.Add(this.rb_Title);
@@ -374,6 +419,56 @@
             this.tb_View.TabIndex = 1;
             this.tb_View.Text = "View";
             this.tb_View.UseVisualStyleBackColor = true;
+            // 
+            // cbShowHidden
+            // 
+            this.cbShowHidden.AutoSize = true;
+            this.cbShowHidden.Location = new System.Drawing.Point(242, 7);
+            this.cbShowHidden.Name = "cbShowHidden";
+            this.cbShowHidden.Size = new System.Drawing.Size(60, 17);
+            this.cbShowHidden.TabIndex = 9;
+            this.cbShowHidden.Text = "Hidden";
+            this.cbShowHidden.UseVisualStyleBackColor = true;
+            // 
+            // cbShowImage
+            // 
+            this.cbShowImage.AutoSize = true;
+            this.cbShowImage.Location = new System.Drawing.Point(304, 7);
+            this.cbShowImage.Name = "cbShowImage";
+            this.cbShowImage.Size = new System.Drawing.Size(55, 17);
+            this.cbShowImage.TabIndex = 8;
+            this.cbShowImage.Text = "Image";
+            this.cbShowImage.UseVisualStyleBackColor = true;
+            // 
+            // cbShowOther
+            // 
+            this.cbShowOther.AutoSize = true;
+            this.cbShowOther.Location = new System.Drawing.Point(243, 30);
+            this.cbShowOther.Name = "cbShowOther";
+            this.cbShowOther.Size = new System.Drawing.Size(52, 17);
+            this.cbShowOther.TabIndex = 7;
+            this.cbShowOther.Text = "Other";
+            this.cbShowOther.UseVisualStyleBackColor = true;
+            // 
+            // cbShowFolder
+            // 
+            this.cbShowFolder.AutoSize = true;
+            this.cbShowFolder.Location = new System.Drawing.Point(304, 30);
+            this.cbShowFolder.Name = "cbShowFolder";
+            this.cbShowFolder.Size = new System.Drawing.Size(55, 17);
+            this.cbShowFolder.TabIndex = 6;
+            this.cbShowFolder.Text = "Folder";
+            this.cbShowFolder.UseVisualStyleBackColor = true;
+            // 
+            // lbView
+            // 
+            this.lbView.AutoSize = true;
+            this.lbView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbView.Location = new System.Drawing.Point(195, 5);
+            this.lbView.Name = "lbView";
+            this.lbView.Size = new System.Drawing.Size(41, 16);
+            this.lbView.TabIndex = 5;
+            this.lbView.Text = "Show";
             // 
             // rb_Largeicon
             // 
@@ -497,6 +592,14 @@
         private System.Windows.Forms.TabPage tb_View3;
         private System.Windows.Forms.TreeView treeView3;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ImageList imageList2;
+        private System.Windows.Forms.CheckBox cbShowImage;
+        private System.Windows.Forms.CheckBox cbShowOther;
+        private System.Windows.Forms.CheckBox cbShowFolder;
+        private System.Windows.Forms.Label lbView;
+        private System.Windows.Forms.CheckBox cbShowHidden;
+        private System.Windows.Forms.Button btnGoto;
+        private System.Windows.Forms.WebBrowser webBrowser;
     }
 }
 

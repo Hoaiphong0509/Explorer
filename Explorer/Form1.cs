@@ -29,9 +29,7 @@ namespace Explorer
         public Form1()
         {
             InitializeComponent();
-            InitTreeView(treeView1);
-
-            
+            InitTreeView(treeView1);            
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -179,9 +177,6 @@ namespace Explorer
         {
             ListView item = (ListView)sender;
             //item.SelectedItems[0].Text;
-            
-
-
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -230,14 +225,72 @@ namespace Explorer
         {
             if (e.ClickedItem.Name == "tsb_Next")
             {
-
+                if (webBrowser.CanGoForward) webBrowser.GoForward(); //CHE DO 2
             }
             else
             {
-                string strPath = stack_Next.Pop();
+                if (webBrowser.CanGoBack) webBrowser.GoBack();
+                //string strPath = stack_Next.Pop();
 
             }
             
+        }
+
+        //
+        //CHE DO 2
+        //
+
+        private void btnGoto_Click(object sender, EventArgs e) //Enable = true khi click vao che do 2
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                webBrowser.Url = new Uri(fbd.SelectedPath);
+                txtPath.Text = fbd.SelectedPath;
+                listView1.Clear();
+            }
+        }
+
+        private void tb_Memu2_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage.Name == "tb_View2")
+                btnGoto.Enabled = true;
+            else
+                btnGoto.Enabled = false;  
+        }
+
+
+        //
+        // H O M E 
+        //
+
+        //
+        // add new file - Con loi -
+        public delegate void delPassData(string nameFile);
+        private void tsb_Add_Click(object sender, EventArgs e)
+        {
+            string newFile="";
+            CreateFile cf = new CreateFile();
+
+            if (newFile == "")
+            {
+                cf.Show();
+                newFile = cf.NameFile;
+               
+            }
+           if(newFile != "")
+            {
+                TreeNode node = new TreeNode(newFile);
+                treeView1.Nodes.Add(node);
+            }
+        }
+
+        //
+        //Remove file
+        //
+        private void tsb_Delete_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.Remove();
         }
     }
 }
