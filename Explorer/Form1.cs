@@ -1,35 +1,38 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics;
 using System.Security.AccessControl;
-using System.Collections;
-using System.Web;
-using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace Explorer
 {
+
     public partial class Form1 : Form
     {
-        static string strPath = Application.StartupPath + @"..\..\..\";
-        //static string strPath = @"D:\";
+        struct TypePaste
+        {
+            public const int CUT = 1, COPY = 2, NONE = 0;
+        }
+
+        int iTypePaste = TypePaste.NONE;
+        //public static string strPath = Application.StartupPath + @"..\..\..\";
+        public static string strPath = @"D:\";
         static string strRoot = "root";
         Stack<string> stack_Previous = new Stack<string>();
         Stack<string> stack_Next = new Stack<string>();
         DirectoryInfo directoryInfo = new DirectoryInfo(strPath);
 
+        List<InfoPaste> listFileFolder = new List<InfoPaste>();
+
+        public static string PathNow = strPath;
+
+
         Dictionary<string, string> NameTypeofExtension = new Dictionary<string, string>();
         public Form1()
         {
             InitializeComponent();
-            InitTreeView(treeView1);            
+            InitTreeView(treeView1);
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -90,6 +93,7 @@ namespace Explorer
 
         private void LoadListView(string strPath)
         {
+            Form1.PathNow = strPath;
             listView1.Items.Clear();
             string[] Files = Directory.GetFiles(strPath);
             foreach (var item in Files)
@@ -103,6 +107,8 @@ namespace Explorer
                 DirectoryInfo directoryInfo = new DirectoryInfo(item);
                 listView1.Items.Add(new ListViewItem(new string[] { directoryInfo.Name, directoryInfo.LastWriteTime.ToString(), "Folder" }));
             }
+
+
         }
 
         private string GetNameTypeFormExtension(string ext)
@@ -150,7 +156,7 @@ namespace Explorer
 
             if (sizefile > 573741824)
             {
-                return Math.Round(((double)sizefile / 1073741824),2) + " GB";
+                return Math.Round(((double)sizefile / 1073741824), 2) + " GB";
             }
             else if (sizefile > 3145728)
             {
@@ -168,8 +174,26 @@ namespace Explorer
 
         private void listView1_ItemActivate(object sender, EventArgs e)
         {
-            //Console.WriteLine("Active");
-            //ListView item = (ListView)sender;
+            if (listView1.FocusedItem.SubItems[2].Text == "Folder")
+            {
+                foreach (TreeNode item in treeView1.SelectedNode.Nodes)
+                {
+                    if (item.Text == listView1.FocusedItem.Text)
+                    {
+                        treeView1.SelectedNode = item;
+                        LoadFolder(item);
+
+
+
+                        break;
+
+                    }
+                }
+            }
+            else
+            {
+
+            }
 
         }
 
@@ -194,7 +218,7 @@ namespace Explorer
 
         private void rb_CheckedChanged(object sender, EventArgs e)
         {
-            
+
             RadioButton radioButton = (RadioButton)sender;
             if (radioButton.Checked == true)
             {
@@ -233,7 +257,7 @@ namespace Explorer
                 //string strPath = stack_Next.Pop();
 
             }
-            
+
         }
 
         //
@@ -256,29 +280,21 @@ namespace Explorer
             if (e.TabPage.Name == "tb_View2")
                 btnGoto.Enabled = true;
             else
-                btnGoto.Enabled = false;  
+                btnGoto.Enabled = false;
         }
 
-
-        //
-        // H O M E 
-        //
-
-        //
-        // add new file - Con loi -
-        public delegate void delPassData(string nameFile);
         private void tsb_Add_Click(object sender, EventArgs e)
         {
-            string newFile="";
+            string newFile = "";
             CreateFile cf = new CreateFile();
 
             if (newFile == "")
             {
                 cf.Show();
                 newFile = cf.NameFile;
-               
+
             }
-           if(newFile != "")
+            if (newFile != "")
             {
                 TreeNode node = new TreeNode(newFile);
                 treeView1.Nodes.Add(node);
@@ -292,6 +308,176 @@ namespace Explorer
         {
             treeView1.SelectedNode.Remove();
         }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0) return;
+            iTypePaste = TypePaste.CUT;
+            listFileFolder.Clear();
+
+            foreach (ListViewItem item in listView1.SelectedItems)
+            {
+                listFileFolder.Add(new InfoPaste(PathNow, item.Text, (item.SubItems[2].Text == "Folder" ? false : true)));
+            }
+
+        }
+
+        private void listView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F2 && listView1.SelectedItems.Count > 0)
+            {
+                listView1.LabelEdit = true;
+                listView1.SelectedItems[0].BeginEdit();
+            }
+        }
+
+        private void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (iTypePaste == TypePaste.NONE || listFileFolder.Count == 0)
+            {
+                Console.WriteLine("No Cut or Copy");
+                return;
+            }
+
+            if (iTypePaste == TypePaste.CUT)
+            {
+                foreach (var item in listFileFolder)
+                {
+                    if (item.isFile)
+                    {
+                        File.Move(item.PathFolder + "\\" + item.Name, PathNow + "\\" + item.Name);
+                        Console.WriteLine($"Cut File from {item.PathFolder}\\{item.Name} to {PathNow}\\{item.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Cut Dir from {item.PathFolder}\\{item.Name} to {PathNow}\\{item.Name}");
+                        Directory.Move(item.PathFolder + "\\" + item.Name, PathNow + "\\" + item.Name);
+                    }
+                }
+            }
+            else
+            {
+                if (listFileFolder[0].PathFolder == PathNow)
+                {
+                    foreach (var item in listFileFolder)
+                    {
+                        if (item.isFile)
+                        {
+                            string NewFileName = item.Name;
+                            for (int i = item.Name.Length - 1; i >= 0; i--)
+                            {
+                                if (item.Name[i] == '.')
+                                {
+                                    NewFileName = item.Name.Insert(i, " - copy");
+                                    break;
+                                }
+                                else if (i == 0)
+                                {
+                                    NewFileName = item.Name + " - copy";
+                                }
+                            }
+                            File.Copy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + NewFileName);
+                            Console.WriteLine($"Copy File from {item.PathFolder}\\{item.Name} to {PathNow}\\{NewFileName}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Copy Dir from {item.PathFolder}\\{item.Name} to {PathNow}\\{item.Name} - copy");
+                            DirectoryCopy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + item.Name + " - copy");
+                        }
+                    }
+
+                    
+                }
+                else
+                {
+                    foreach (var item in listFileFolder)
+                    {
+                        if (item.isFile)
+                        {
+                            File.Copy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + item.Name);
+                            Console.WriteLine($"Copy File from {item.PathFolder}\\{item.Name} to {PathNow}\\{item.Name}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Copy Dir from {item.PathFolder}\\{item.Name} to {PathNow}\\{item.Name}");
+                            DirectoryCopy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + item.Name);
+                        }
+                    }
+                }
+            }
+
+            LoadListView(PathNow);
+
+            if (iTypePaste == TypePaste.CUT)
+            {
+                iTypePaste = TypePaste.NONE;
+                listFileFolder.Clear();
+            }
+
+        }
+
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs = true)
+        {
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                }
+            }
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0) return;
+            iTypePaste = TypePaste.COPY;
+            listFileFolder.Clear();
+
+            foreach (ListViewItem item in listView1.SelectedItems)
+            {
+                listFileFolder.Add(new InfoPaste(PathNow, item.Text, (item.SubItems[2].Text == "Folder" ? false : true)));
+            }
+        }
     }
+
+    class InfoPaste
+    {
+        public string PathFolder, Name;
+        public bool isFile;
+
+        //public InfoPaste() { };
+        public InfoPaste(string PathFolder, string Name, bool isFile)
+        {
+            this.PathFolder = PathFolder;
+            this.Name = Name;
+            this.isFile = isFile;
+        }
+    }
+
 }
 
