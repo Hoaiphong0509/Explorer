@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.AccessControl;
+using System.Web.UI;
 using System.Windows.Forms;
 
 namespace Explorer
@@ -25,6 +27,7 @@ namespace Explorer
 
         List<InfoPaste> listFileFolder = new List<InfoPaste>();
 
+        string strExtensionImage = "BMP, GIF, JPG, JPEG, PNG, JFIF";
         public static string PathNow = strPath;
 
 
@@ -116,15 +119,30 @@ namespace Explorer
             if (NameTypeofExtension.ContainsKey(ext))
             {
                 return NameTypeofExtension[ext];
+            }else if (ext.Length <= 1)
+            {
+                NameTypeofExtension.Add(ext, "File");
+                return NameTypeofExtension[ext];
             }
 
             string temp = null, temp2 = "File";
             try
             {
+                if (Registry.ClassesRoot.OpenSubKey(ext) == null)
+                {
+                    NameTypeofExtension.Add(ext, ext.Substring(1).ToUpper() + " File");
+                    return NameTypeofExtension[ext];
+                }
                 temp = (string)Registry.ClassesRoot.OpenSubKey(ext).GetValue("");
 
                 if (temp == null)
                 {
+                    if (Registry.ClassesRoot.OpenSubKey(ext).OpenSubKey("OpenWithProgids") == null)
+                    {
+                        NameTypeofExtension.Add(ext, ext.Substring(1).ToUpper() + " File");
+                        return NameTypeofExtension[ext];
+                    }
+
                     temp = (string)Registry.ClassesRoot.OpenSubKey(ext).OpenSubKey("OpenWithProgids").GetValue("");
                     if (temp == null)
                     {
@@ -176,22 +194,33 @@ namespace Explorer
         {
             if (listView1.FocusedItem.SubItems[2].Text == "Folder")
             {
-                foreach (TreeNode item in treeView1.SelectedNode.Nodes)
-                {
-                    if (item.Text == listView1.FocusedItem.Text)
-                    {
-                        treeView1.SelectedNode = item;
-                        LoadFolder(item);
+                LoadListView(PathNow + "\\" + listView1.FocusedItem.Text);
 
+                //foreach (TreeNode item in treeView1.SelectedNode.Nodes)
+                //{
+                //    if (item.Text == listView1.FocusedItem.Text)
+                //    {
+                //        //treeView1.SelectedNode = item;
+                        
+                //        break;
 
-
-                        break;
-
-                    }
-                }
+                //    }
+                //}
             }
             else
             {
+                FileInfo fileInfo = new FileInfo(PathNow + "\\" + listView1.SelectedItems[0].Text);
+                if (fileInfo.Extension.Length < 4)
+                {
+                    return;
+                }
+
+                if (strExtensionImage.IndexOf(fileInfo.Extension.Substring(1).ToUpper()) >= 0)
+                {
+                    Process.Start(fileInfo.FullName);
+                }
+
+
 
             }
 
