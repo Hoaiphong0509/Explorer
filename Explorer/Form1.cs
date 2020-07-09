@@ -89,13 +89,30 @@ namespace Explorer
         // Load thư Listview khi click hoặc ấn Enter.
         private void LoadFolder(TreeNode treeNode)
         {
+            if (strPath + treeNode.FullPath == PathNow)
+            {
+                return;
+            }
             txtPath.Text = strRoot + "\\" + treeNode.FullPath;
+
+            stack_Previous.Push(PathNow);
             LoadListView(strPath + treeNode.FullPath);
+            
 
         }
 
         private void LoadListView(string strPath)
         {
+            // Nếu stack Previous rỗng thì disenable Prev
+            if (stack_Previous.Count == 0)
+            {
+                tsb_Previous.Enabled = false;
+            }
+            else
+            {
+                tsb_Previous.Enabled = true;
+            }
+
             Form1.PathNow = strPath;
             listView1.Items.Clear();
             string[] Files = Directory.GetFiles(strPath);
@@ -194,18 +211,19 @@ namespace Explorer
         {
             if (listView1.FocusedItem.SubItems[2].Text == "Folder")
             {
-                LoadListView(PathNow + "\\" + listView1.FocusedItem.Text);
+                foreach (TreeNode item in treeView1.SelectedNode.Nodes)
+                {
+                    if (item.Text == listView1.FocusedItem.Text)
+                    {
+                        treeView1.SelectedNode = item;
+                        LoadFolder(item);
+                        break;
 
-                //foreach (TreeNode item in treeView1.SelectedNode.Nodes)
-                //{
-                //    if (item.Text == listView1.FocusedItem.Text)
-                //    {
-                //        //treeView1.SelectedNode = item;
-                        
-                //        break;
-
-                //    }
-                //}
+                    }
+                }
+                
+                //LoadListView(PathNow + "\\" + listView1.FocusedItem.Text);
+                
             }
             else
             {
@@ -220,8 +238,6 @@ namespace Explorer
                     Process.Start(fileInfo.FullName);
                 }
 
-
-
             }
 
         }
@@ -229,7 +245,6 @@ namespace Explorer
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListView item = (ListView)sender;
-            //item.SelectedItems[0].Text;
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -276,15 +291,21 @@ namespace Explorer
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            // Lấy đường dẫn hiện tại thêm vào Prev vào load folder Next. ngược lại với Prev
             if (e.ClickedItem.Name == "tsb_Next")
             {
-                if (webBrowser.CanGoForward) webBrowser.GoForward(); //CHE DO 2
+                stack_Previous.Push(PathNow);
+                LoadListView(stack_Next.Pop());
+                if (stack_Next.Count == 0)
+                {
+                    tsb_Next.Enabled = false;
+                }
             }
             else
             {
-                if (webBrowser.CanGoBack) webBrowser.GoBack();
-                //string strPath = stack_Next.Pop();
-
+                stack_Next.Push(PathNow);
+                LoadListView(stack_Previous.Pop());
+                tsb_Next.Enabled = true;
             }
 
         }
