@@ -116,6 +116,7 @@ namespace Explorer
             PathNow = strPath;
             Console.WriteLine("Path : " + PathNow);
             listView1.Items.Clear();
+            listView1.Update();
             string[] Files = Directory.GetFiles(strPath);
             foreach (var item in Files)
             {
@@ -381,13 +382,23 @@ namespace Explorer
             if (e.KeyData == Keys.F2 && listView1.SelectedItems.Count > 0)
             {
                 listView1.LabelEdit = true;
-                listView1.SelectedItems[0].BeginEdit();
+                listView1.FocusedItem.BeginEdit();
             }
         }
 
         private void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-
+            if (listView1.FocusedItem.SubItems[2].Text == "Folder")
+            {
+                Directory.Move(PathNow + "\\" + listView1.FocusedItem.Text, PathNow + "\\" + e.Label);
+            }
+            else
+            {
+                File.Move(PathNow + "\\" + listView1.FocusedItem.Text, PathNow + "\\" + e.Label);
+            }
+            listView1.LabelEdit = false;
+            e.CancelEdit = true;
+            LoadListView(PathNow);
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
