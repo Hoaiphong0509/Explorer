@@ -32,16 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnGoto = new System.Windows.Forms.Button();
-            this.tb_Memu2 = new System.Windows.Forms.TabControl();
-            this.tb_View1 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.tb_View2 = new System.Windows.Forms.TabPage();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
-            this.treeView2 = new System.Windows.Forms.TreeView();
-            this.tb_View3 = new System.Windows.Forms.TabPage();
-            this.treeView3 = new System.Windows.Forms.TreeView();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnGoto = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Previous = new System.Windows.Forms.ToolStripButton();
             this.tsb_Next = new System.Windows.Forms.ToolStripButton();
@@ -53,9 +46,11 @@
             this.ch_Type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tc_Menu1 = new System.Windows.Forms.TabControl();
             this.tb_Home = new System.Windows.Forms.TabPage();
@@ -78,10 +73,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tb_Memu2.SuspendLayout();
-            this.tb_View1.SuspendLayout();
-            this.tb_View2.SuspendLayout();
-            this.tb_View3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tc_Menu1.SuspendLayout();
@@ -103,8 +94,9 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.treeView1);
+            this.panel3.Controls.Add(this.btnRefresh);
             this.panel3.Controls.Add(this.btnGoto);
-            this.panel3.Controls.Add(this.tb_Memu2);
             this.panel3.Controls.Add(this.toolStrip1);
             this.panel3.Controls.Add(this.txtPath);
             this.panel3.Controls.Add(this.listView1);
@@ -114,9 +106,31 @@
             this.panel3.Size = new System.Drawing.Size(713, 403);
             this.panel3.TabIndex = 3;
             // 
+            // treeView1
+            // 
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
+            this.treeView1.Location = new System.Drawing.Point(0, 26);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(198, 374);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.BackgroundImage = global::Explorer.Properties.Resources.refresh;
+            this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnRefresh.Location = new System.Drawing.Point(640, 0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(21, 21);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.button1_Click);
+            // 
             // btnGoto
             // 
-            this.btnGoto.Enabled = false;
             this.btnGoto.Location = new System.Drawing.Point(660, 0);
             this.btnGoto.Name = "btnGoto";
             this.btnGoto.Size = new System.Drawing.Size(49, 21);
@@ -124,99 +138,6 @@
             this.btnGoto.Text = "Goto";
             this.btnGoto.UseVisualStyleBackColor = true;
             this.btnGoto.Click += new System.EventHandler(this.btnGoto_Click);
-            // 
-            // tb_Memu2
-            // 
-            this.tb_Memu2.Controls.Add(this.tb_View1);
-            this.tb_Memu2.Controls.Add(this.tb_View2);
-            this.tb_Memu2.Controls.Add(this.tb_View3);
-            this.tb_Memu2.Location = new System.Drawing.Point(0, 29);
-            this.tb_Memu2.Name = "tb_Memu2";
-            this.tb_Memu2.SelectedIndex = 0;
-            this.tb_Memu2.Size = new System.Drawing.Size(200, 374);
-            this.tb_Memu2.TabIndex = 3;
-            this.tb_Memu2.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tb_Memu2_Selecting);
-            // 
-            // tb_View1
-            // 
-            this.tb_View1.Controls.Add(this.treeView1);
-            this.tb_View1.Location = new System.Drawing.Point(4, 22);
-            this.tb_View1.Name = "tb_View1";
-            this.tb_View1.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_View1.Size = new System.Drawing.Size(192, 348);
-            this.tb_View1.TabIndex = 0;
-            this.tb_View1.Text = "CheDo1";
-            this.tb_View1.UseVisualStyleBackColor = true;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.HideSelection = false;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList2;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(186, 342);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
-            // 
-            // imageList2
-            // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "folder.png");
-            // 
-            // tb_View2
-            // 
-            this.tb_View2.Controls.Add(this.webBrowser);
-            this.tb_View2.Controls.Add(this.treeView2);
-            this.tb_View2.Location = new System.Drawing.Point(4, 22);
-            this.tb_View2.Name = "tb_View2";
-            this.tb_View2.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_View2.Size = new System.Drawing.Size(192, 348);
-            this.tb_View2.TabIndex = 1;
-            this.tb_View2.Text = "CheDo2";
-            this.tb_View2.UseVisualStyleBackColor = true;
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(186, 342);
-            this.webBrowser.TabIndex = 1;
-            // 
-            // treeView2
-            // 
-            this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView2.Location = new System.Drawing.Point(3, 3);
-            this.treeView2.Name = "treeView2";
-            this.treeView2.Size = new System.Drawing.Size(186, 342);
-            this.treeView2.TabIndex = 0;
-            // 
-            // tb_View3
-            // 
-            this.tb_View3.Controls.Add(this.treeView3);
-            this.tb_View3.Location = new System.Drawing.Point(4, 22);
-            this.tb_View3.Name = "tb_View3";
-            this.tb_View3.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_View3.Size = new System.Drawing.Size(192, 348);
-            this.tb_View3.TabIndex = 2;
-            this.tb_View3.Text = "CheDo3";
-            this.tb_View3.UseVisualStyleBackColor = true;
-            // 
-            // treeView3
-            // 
-            this.treeView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView3.Location = new System.Drawing.Point(3, 3);
-            this.treeView3.Name = "treeView3";
-            this.treeView3.Size = new System.Drawing.Size(186, 342);
-            this.treeView3.TabIndex = 0;
             // 
             // toolStrip1
             // 
@@ -227,7 +148,7 @@
             this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(7, -2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(95, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(64, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
@@ -261,7 +182,7 @@
             // 
             this.txtPath.Location = new System.Drawing.Point(74, 0);
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(580, 20);
+            this.txtPath.Size = new System.Drawing.Size(560, 20);
             this.txtPath.TabIndex = 2;
             // 
             // listView1
@@ -273,9 +194,9 @@
             this.ch_Size});
             this.listView1.ContextMenuStrip = this.contextMenuStrip1;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(202, 51);
+            this.listView1.Location = new System.Drawing.Point(202, 26);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(511, 352);
+            this.listView1.Size = new System.Drawing.Size(511, 377);
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 1;
             this.listView1.TabStop = false;
@@ -309,32 +230,46 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cutToolStripMenuItem,
             this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
+            this.cutToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 70);
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
-            this.cutToolStripMenuItem.Text = "Cut";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 92);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.cutToolStripMenuItem.Text = "Cut";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "folder.png");
             // 
             // imageList1
             // 
@@ -576,10 +511,6 @@
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.tb_Memu2.ResumeLayout(false);
-            this.tb_View1.ResumeLayout(false);
-            this.tb_View2.ResumeLayout(false);
-            this.tb_View3.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -624,13 +555,6 @@
         private System.Windows.Forms.RadioButton rb_Smallicon;
         private System.Windows.Forms.RadioButton rb_Title;
         private System.Windows.Forms.RadioButton rb_Details;
-        private System.Windows.Forms.TabControl tb_Memu2;
-        private System.Windows.Forms.TabPage tb_View1;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.TabPage tb_View2;
-        private System.Windows.Forms.TreeView treeView2;
-        private System.Windows.Forms.TabPage tb_View3;
-        private System.Windows.Forms.TreeView treeView3;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.CheckBox cbShowImage;
@@ -639,11 +563,13 @@
         private System.Windows.Forms.Label lbView;
         private System.Windows.Forms.CheckBox cbShowHidden;
         private System.Windows.Forms.Button btnGoto;
-        private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 

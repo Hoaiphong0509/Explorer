@@ -321,13 +321,7 @@ namespace Explorer
 
         private void btnGoto_Click(object sender, EventArgs e) //Enable = true khi click vao che do 2
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                webBrowser.Url = new Uri(fbd.SelectedPath);
-                txtPath.Text = fbd.SelectedPath;
-                listView1.Clear();
-            }
+            
         }
 
         private void tb_Memu2_Selecting(object sender, TabControlCancelEventArgs e)
@@ -654,15 +648,28 @@ namespace Explorer
                 if (item.SubItems[2].Text == "Folder")
                 {
                     Directory.Delete(PathNow + "\\" + item.Text, true);
+                    button1_Click(btnRefresh, EventArgs.Empty);
                 }
                 else
                 {
+                    LoadListView(PathNow);
                     File.Delete(PathNow + "\\" + item.Text);
                 }
             }
+            
+            //L
 
-            LoadListView(PathNow);
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            while (treeView1.Nodes.Count > 0)
+            {
+                treeView1.Nodes.RemoveAt(0);
+            }
+            listView1.Items.Clear();
+            InitTreeView(treeView1);
+            LoadListView(strPath);
         }
     }
 
