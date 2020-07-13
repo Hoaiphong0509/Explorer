@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Security.AccessControl;
 using System.Web.UI;
@@ -18,9 +19,8 @@ namespace Explorer
         }
 
         int iTypePaste = TypePaste.NONE;
-        //public static string strPath = Application.StartupPath + @"..\..\..\";
-        public static string strPath = @"D:\";
-        static string strRoot = "root";
+        public static string strPath = Application.StartupPath + @"..\..\..\";
+        //public static string strPath = @"D:\";
         Stack<string> stack_Previous = new Stack<string>();
         Stack<string> stack_Next = new Stack<string>();
         DirectoryInfo directoryInfo = new DirectoryInfo(strPath);
@@ -35,26 +35,26 @@ namespace Explorer
         public Form1()
         {
             InitializeComponent();
-            InitTreeView(treeView1);
+            InitTreeView();
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
         }
 
-        private void InitTreeView(TreeView treeView)
+        private void InitTreeView()
         {
             foreach (var item in directoryInfo.GetDirectories())
             {
                 TreeNode temp_Node = new TreeNode(item.Name);
-                treeView.Nodes.Add(temp_Node);
+                temp_Node.ImageKey = "folder";
+                temp_Node.SelectedImageKey = "folder open";
+                treeView1.Nodes.Add(temp_Node);
                 LoadTreeNode(temp_Node);
             }
 
-            if (treeView.Nodes.Count > 0)
-            {
-                treeView.Nodes[0].Checked = true;
-            }
+            LoadListView(strPath);
+            txtPath.Text = "\\";
         }
 
         private void LoadTreeNode(TreeNode treeNode)
@@ -75,6 +75,8 @@ namespace Explorer
             foreach (var item in directoryInfo.GetDirectories())
             {
                 TreeNode temp_Node = new TreeNode(item.Name);
+                temp_Node.ImageKey = "folder";
+                temp_Node.SelectedImageKey = "folder open";
                 treeNode.Nodes.Add(temp_Node);
                 LoadTreeNode(temp_Node);
             }
@@ -93,10 +95,9 @@ namespace Explorer
             {
                 return;
             }
-            txtPath.Text = strRoot + "\\" + treeNode.FullPath;
 
             stack_Previous.Push(PathNow);
-            LoadListView(strPath + treeNode.FullPath);
+            LoadListView(strPath + "\\" + treeNode.FullPath);
             
 
         }
@@ -114,20 +115,31 @@ namespace Explorer
             }
 
             PathNow = strPath;
+            txtPath.Text = strPath.Substring(Form1.strPath.Length);
             Console.WriteLine("Path : " + PathNow);
             listView1.Items.Clear();
             listView1.Update();
             string[] Files = Directory.GetFiles(strPath);
+
+            Icon iconForFile;
             foreach (var item in Files)
             {
                 FileInfo fileInfo = new FileInfo(item);
-                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), GetNameTypeFormExtension(fileInfo.Extension), GetSizeString(fileInfo.Length) }));
+                if (!SmallIcon.Images.ContainsKey(fileInfo.Extension))
+                {
+
+                    iconForFile = System.Drawing.Icon.ExtractAssociatedIcon(fileInfo.FullName);
+                    SmallIcon.Images.Add(fileInfo.Extension, iconForFile);
+                    LargeIcon.Images.Add(fileInfo.Extension, iconForFile);
+                }
+
+                listView1.Items.Add(new ListViewItem(new string[] { fileInfo.Name, fileInfo.LastWriteTime.ToString(), GetNameTypeFormExtension(fileInfo.Extension), GetSizeString(fileInfo.Length) }, fileInfo.Extension));
             }
 
             foreach (var item in Directory.GetDirectories(strPath))
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(item);
-                listView1.Items.Add(new ListViewItem(new string[] { directoryInfo.Name, directoryInfo.LastWriteTime.ToString(), "Folder" }));
+                listView1.Items.Add(new ListViewItem(new string[] { directoryInfo.Name, directoryInfo.LastWriteTime.ToString(), "Folder" }, "folder"));
             }
 
 
@@ -321,6 +333,15 @@ namespace Explorer
 
         private void btnGoto_Click(object sender, EventArgs e) //Enable = true khi click vao che do 2
         {
+            if (Directory.Exists(strPath + txtPath.Text) == false)
+            {
+                MessageBox.Show("Đường dẫn không tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtPath.Text = PathNow.Substring(strPath.Length);
+            }
+            else
+            {
+                LoadListView(strPath + txtPath.Text);
+            }
             
         }
 
@@ -330,24 +351,6 @@ namespace Explorer
                 btnGoto.Enabled = true;
             else
                 btnGoto.Enabled = false;
-        }
-
-        private void tsb_Add_Click(object sender, EventArgs e)
-        {
-            string newFile = "";
-            CreateFile cf = new CreateFile();
-
-            if (newFile == "")
-            {
-                cf.Show();
-                newFile = cf.NameFile;
-
-            }
-            if (newFile != "")
-            {
-                TreeNode node = new TreeNode(newFile);
-                treeView1.Nodes.Add(node);
-            }
         }
 
         //
@@ -373,23 +376,51 @@ namespace Explorer
 
         private void listView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.F2 && listView1.SelectedItems.Count > 0)
+            if (listView1.SelectedItems.Count == 0) return;
+            if (e.KeyData == Keys.F2)
             {
                 listView1.LabelEdit = true;
-                listView1.FocusedItem.BeginEdit();
+                listView1.SelectedItems[0].BeginEdit();
+            }
+            else if (e.KeyData == Keys.Delete)
+            {
+                deleteToolStripMenuItem_Click(deleteToolStripMenuItem, EventArgs.Empty);
             }
         }
 
         private void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if (listView1.FocusedItem.SubItems[2].Text == "Folder")
+            if (e.Label.IndexOf('\\') >= 0 || e.Label.IndexOf('/') >= 0 || e.Label.IndexOf(':') >= 0 || e.Label.IndexOf('*') >= 0 || e.Label.IndexOf('?') >= 0 || e.Label.IndexOf('"') >= 0 || e.Label.IndexOf('>') >= 0 || e.Label.IndexOf('<') >= 0 || e.Label.IndexOf('|') >= 0)
             {
-                Directory.Move(PathNow + "\\" + listView1.FocusedItem.Text, PathNow + "\\" + e.Label);
+                MessageBox.Show("Tên tập tin hoặc thư mục không hợp lệ.\nKhông thể đặt các dấu : \\ / : * ? \" < > |", "Lỗi tên", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                listView1.LabelEdit = false;
+                e.CancelEdit = true;
+                return;
             }
-            else
+            if (e.Label.ToUpper() == "CON" || (e.Label.ToUpper().Substring(0,4) == "CON."))
             {
-                File.Move(PathNow + "\\" + listView1.FocusedItem.Text, PathNow + "\\" + e.Label);
+                MessageBox.Show("Không thể đặt tên thư mục, tập tin tên này.", "Lỗi tên", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                listView1.LabelEdit = false;
+                e.CancelEdit = true;
+                return;
             }
+
+            try
+            {
+                if (listView1.FocusedItem.SubItems[2].Text == "Folder")
+                {
+                    Directory.Move(PathNow + "\\" + listView1.FocusedItem.Text, PathNow + "\\" + e.Label);
+                }
+                else
+                {
+                    File.Move(PathNow + "\\" + listView1.FocusedItem.Text, PathNow + "\\" + e.Label);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
             listView1.LabelEdit = false;
             e.CancelEdit = true;
             LoadListView(PathNow);
@@ -656,20 +687,51 @@ namespace Explorer
                     File.Delete(PathNow + "\\" + item.Text);
                 }
             }
-            
-            //L
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string PathNowtemp = PathNow;
             while (treeView1.Nodes.Count > 0)
             {
                 treeView1.Nodes.RemoveAt(0);
             }
             listView1.Items.Clear();
-            InitTreeView(treeView1);
-            LoadListView(strPath);
+            InitTreeView();
+            LoadListView(PathNowtemp);
+        }
+
+        private void txtPath_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnGoto_Click(btnGoto, EventArgs.Empty);
+            }
+        }
+
+        private void newFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string FolderName = "New Folder";
+            while (listView1.FindItemWithText(FolderName) != null)
+            {
+                FolderName += "2";
+            }
+
+            Directory.CreateDirectory(PathNow + "\\" + FolderName);
+
+            LoadListView(PathNow);
+            if (listView1.FindItemWithText(FolderName) == null)
+            {
+                MessageBox.Show("Lỗi tạo thư mục", "lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            listView1.Update();
+            listView1.FindItemWithText(FolderName).Selected = true;
+            listView1.Update();
+            listView1_KeyDown(listView1, new KeyEventArgs(Keys.F2));
+
         }
     }
 

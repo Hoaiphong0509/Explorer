@@ -33,6 +33,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnGoto = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -50,12 +51,12 @@
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.newFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LargeIcon = new System.Windows.Forms.ImageList(this.components);
+            this.SmallIcon = new System.Windows.Forms.ImageList(this.components);
             this.tc_Menu1 = new System.Windows.Forms.TabControl();
             this.tb_Home = new System.Windows.Forms.TabPage();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.tsb_Add = new System.Windows.Forms.ToolStripButton();
             this.tsb_Coppy = new System.Windows.Forms.ToolStripButton();
             this.tsb_Cut = new System.Windows.Forms.ToolStripButton();
             this.tsb_Paste = new System.Windows.Forms.ToolStripButton();
@@ -110,17 +111,32 @@
             // 
             this.treeView1.FullRowSelect = true;
             this.treeView1.HideSelection = false;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
             this.treeView1.Location = new System.Drawing.Point(0, 26);
             this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(198, 374);
             this.treeView1.TabIndex = 0;
             this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "images.png");
+            this.imageList1.Images.SetKeyName(1, "folder.png");
+            this.imageList1.Images.SetKeyName(2, "download.png");
+            this.imageList1.Images.SetKeyName(3, "pc.png");
+            this.imageList1.Images.SetKeyName(4, "document.png");
+            this.imageList1.Images.SetKeyName(5, "music.png");
+            this.imageList1.Images.SetKeyName(6, "folder");
+            this.imageList1.Images.SetKeyName(7, "folder open");
+            // 
             // btnRefresh
             // 
-            this.btnRefresh.BackgroundImage = global::Explorer.Properties.Resources.refresh;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnRefresh.Location = new System.Drawing.Point(640, 0);
             this.btnRefresh.Name = "btnRefresh";
@@ -184,6 +200,8 @@
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(560, 20);
             this.txtPath.TabIndex = 2;
+            this.txtPath.Text = "\\";
+            this.txtPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPath_KeyDown);
             // 
             // listView1
             // 
@@ -194,9 +212,11 @@
             this.ch_Size});
             this.listView1.ContextMenuStrip = this.contextMenuStrip1;
             this.listView1.HideSelection = false;
+            this.listView1.LargeImageList = this.LargeIcon;
             this.listView1.Location = new System.Drawing.Point(202, 26);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(511, 377);
+            this.listView1.SmallImageList = this.SmallIcon;
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 1;
             this.listView1.TabStop = false;
@@ -233,54 +253,57 @@
             this.copyToolStripMenuItem,
             this.cutToolStripMenuItem,
             this.pasteToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.newFolderToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 114);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // imageList2
+            // newFolderToolStripMenuItem
             // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "folder.png");
+            this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
+            this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.newFolderToolStripMenuItem.Text = "New Folder";
+            this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.newFolderToolStripMenuItem_Click);
             // 
-            // imageList1
+            // LargeIcon
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "images.png");
-            this.imageList1.Images.SetKeyName(1, "folder.png");
-            this.imageList1.Images.SetKeyName(2, "download.png");
-            this.imageList1.Images.SetKeyName(3, "pc.png");
-            this.imageList1.Images.SetKeyName(4, "document.png");
-            this.imageList1.Images.SetKeyName(5, "music.png");
+            this.LargeIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("LargeIcon.ImageStream")));
+            this.LargeIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.LargeIcon.Images.SetKeyName(0, "folder");
+            // 
+            // SmallIcon
+            // 
+            this.SmallIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("SmallIcon.ImageStream")));
+            this.SmallIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.SmallIcon.Images.SetKeyName(0, "folder");
             // 
             // tc_Menu1
             // 
@@ -312,7 +335,6 @@
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bindingNavigator1.ImageScalingSize = new System.Drawing.Size(30, 30);
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsb_Add,
             this.tsb_Coppy,
             this.tsb_Cut,
             this.tsb_Paste,
@@ -327,16 +349,6 @@
             this.bindingNavigator1.Size = new System.Drawing.Size(699, 49);
             this.bindingNavigator1.TabIndex = 0;
             this.bindingNavigator1.Text = "bindingNavigator1";
-            // 
-            // tsb_Add
-            // 
-            this.tsb_Add.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsb_Add.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Add.Image")));
-            this.tsb_Add.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Add.Name = "tsb_Add";
-            this.tsb_Add.Size = new System.Drawing.Size(34, 46);
-            this.tsb_Add.Text = "Add new item";
-            this.tsb_Add.Click += new System.EventHandler(this.tsb_Add_Click);
             // 
             // tsb_Coppy
             // 
@@ -550,13 +562,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsb_Coppy;
         private System.Windows.Forms.ToolStripButton tsb_Delete;
-        private System.Windows.Forms.ToolStripButton tsb_Add;
         private System.Windows.Forms.RadioButton rb_Largeicon;
         private System.Windows.Forms.RadioButton rb_Smallicon;
         private System.Windows.Forms.RadioButton rb_Title;
         private System.Windows.Forms.RadioButton rb_Details;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.CheckBox cbShowImage;
         private System.Windows.Forms.CheckBox cbShowOther;
         private System.Windows.Forms.CheckBox cbShowFolder;
@@ -570,6 +580,9 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.ImageList LargeIcon;
+        private System.Windows.Forms.ImageList SmallIcon;
+        private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem;
     }
 }
 
