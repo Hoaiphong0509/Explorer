@@ -134,10 +134,13 @@
             this.imageList1.Images.SetKeyName(5, "music.png");
             this.imageList1.Images.SetKeyName(6, "folder");
             this.imageList1.Images.SetKeyName(7, "folder open");
+            this.imageList1.Images.SetKeyName(8, "refresh");
             // 
             // btnRefresh
             // 
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnRefresh.ImageKey = "refresh";
+            this.btnRefresh.ImageList = this.imageList1;
             this.btnRefresh.Location = new System.Drawing.Point(640, 0);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(21, 21);
@@ -225,7 +228,6 @@
             this.listView1.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listView1_AfterLabelEdit);
             this.listView1.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             this.listView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView1_KeyDown);
-            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // ch_name
             // 
@@ -335,8 +337,8 @@
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bindingNavigator1.ImageScalingSize = new System.Drawing.Size(30, 30);
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsb_Coppy,
             this.tsb_Cut,
+            this.tsb_Coppy,
             this.tsb_Paste,
             this.tsb_Delete});
             this.bindingNavigator1.Location = new System.Drawing.Point(3, 3);
@@ -358,6 +360,7 @@
             this.tsb_Coppy.Name = "tsb_Coppy";
             this.tsb_Coppy.Size = new System.Drawing.Size(34, 46);
             this.tsb_Coppy.Text = "Coppy";
+            this.tsb_Coppy.Click += new System.EventHandler(this.tsb_Coppy_Click);
             // 
             // tsb_Cut
             // 
@@ -367,6 +370,7 @@
             this.tsb_Cut.Name = "tsb_Cut";
             this.tsb_Cut.Size = new System.Drawing.Size(34, 46);
             this.tsb_Cut.Text = "Cut";
+            this.tsb_Cut.Click += new System.EventHandler(this.tsb_Cut_Click);
             // 
             // tsb_Paste
             // 
@@ -376,6 +380,7 @@
             this.tsb_Paste.Name = "tsb_Paste";
             this.tsb_Paste.Size = new System.Drawing.Size(34, 46);
             this.tsb_Paste.Text = "Paste";
+            this.tsb_Paste.Click += new System.EventHandler(this.tsb_Paste_Click);
             // 
             // tsb_Delete
             // 

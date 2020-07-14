@@ -186,7 +186,11 @@ namespace Explorer
                 }
                 else
                 {
-                    temp2 = Registry.ClassesRoot.OpenSubKey(temp).GetValue("").ToString();
+                    
+                    if (Registry.ClassesRoot.OpenSubKey(temp) == null || Registry.ClassesRoot.OpenSubKey(temp).GetValue("") == null)
+                        temp2 = "File";
+                    else temp2 = Registry.ClassesRoot.OpenSubKey(temp).GetValue("").ToString();
+
                 }
             }
             catch (Exception)
@@ -245,7 +249,7 @@ namespace Explorer
             else
             {
                 FileInfo fileInfo = new FileInfo(PathNow + "\\" + listView1.SelectedItems[0].Text);
-                if (fileInfo.Extension.Length < 4)
+                if (fileInfo.Extension.Length < 1)
                 {
                     return;
                 }
@@ -257,11 +261,6 @@ namespace Explorer
 
             }
 
-        }
-
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ListView item = (ListView)sender;
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -283,24 +282,19 @@ namespace Explorer
             RadioButton radioButton = (RadioButton)sender;
             if (radioButton.Checked == true)
             {
-                int rdbType = 0;
                 switch (radioButton.Text)
                 {
                     case "Small Icon":
                         listView1.View = View.SmallIcon;
-                        rdbType = 1;
                         break;
                     case "Title":
                         listView1.View = View.Tile;
-                        rdbType = 2;
                         break;
                     case "Large Icon":
                         listView1.View = View.LargeIcon;
-                        rdbType = 3;
                         break;
                     default:
                         listView1.View = View.Details;
-                        rdbType = 0;
                         break;
                 }
             }
@@ -345,20 +339,12 @@ namespace Explorer
             
         }
 
-        private void tb_Memu2_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (e.TabPage.Name == "tb_View2")
-                btnGoto.Enabled = true;
-            else
-                btnGoto.Enabled = false;
-        }
-
         //
         //Remove file
         //
         private void tsb_Delete_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode.Remove();
+            deleteToolStripMenuItem_Click(deleteToolStripMenuItem, EventArgs.Empty);
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -647,28 +633,6 @@ namespace Explorer
         private void tsb_Paste_Click(object sender, EventArgs e)
         {
             pasteToolStripMenuItem_Click(contextMenuStrip1, EventArgs.Empty);
-        }
-
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (iTypePaste == TypePaste.NONE)
-            {
-                pasteToolStripMenuItem.Enabled = false;
-            }
-            else
-            {
-                pasteToolStripMenuItem.Enabled = true;
-            }
-
-            bool bTemp = true;
-            if (listView1.SelectedItems.Count == 0)
-            {
-                bTemp = false;
-            }
-
-            cutToolStripMenuItem.Enabled = bTemp;
-            copyToolStripMenuItem.Enabled = bTemp;
-            deleteToolStripMenuItem.Enabled = bTemp;
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
