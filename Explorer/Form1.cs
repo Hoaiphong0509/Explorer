@@ -38,10 +38,6 @@ namespace Explorer
             InitTreeView();
         }
 
-        private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
-        {
-        }
-
         private void InitTreeView()
         {
             foreach (var item in directoryInfo.GetDirectories())
@@ -52,6 +48,7 @@ namespace Explorer
                 treeView1.Nodes.Add(temp_Node);
                 LoadTreeNode(temp_Node);
             }
+
 
             LoadListView(strPath);
             txtPath.Text = "\\";
@@ -231,20 +228,6 @@ namespace Explorer
             {
                 stack_Previous.Push(PathNow);
                 LoadListView(PathNow + "\\" + listView1.FocusedItem.Text);
-
-                //foreach (TreeNode item in treeView1.SelectedNode.Nodes)
-                //{
-                //    if (item.Text == listView1.FocusedItem.Text)
-                //    {
-                //        treeView1.SelectedNode = item;
-                //        LoadFolder(item);
-                //        break;
-
-                //    }
-                //}
-                
-                //LoadListView(PathNow + "\\" + listView1.FocusedItem.Text);
-                
             }
             else
             {
@@ -258,9 +241,11 @@ namespace Explorer
                 {
                     Process.Start(fileInfo.FullName);
                 }
-
+                else
+                {
+                    MessageBox.Show("Bạn chỉ có thể mở file ảnh với các đuôi : BMP, GIF, JPG, JPEG, PNG, JFIF", "Lỗi mở file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-
         }
 
         private void treeView1_KeyDown(object sender, KeyEventArgs e)
@@ -321,12 +306,9 @@ namespace Explorer
 
         }
 
-        //
-        //CHE DO 2
-        //
-
         private void btnGoto_Click(object sender, EventArgs e) //Enable = true khi click vao che do 2
         {
+            if (txtPath.Text == "") txtPath.Text = "\\";
             if (Directory.Exists(strPath + txtPath.Text) == false)
             {
                 MessageBox.Show("Đường dẫn không tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -339,9 +321,6 @@ namespace Explorer
             
         }
 
-        //
-        //Remove file
-        //
         private void tsb_Delete_Click(object sender, EventArgs e)
         {
             deleteToolStripMenuItem_Click(deleteToolStripMenuItem, EventArgs.Empty);
@@ -357,6 +336,7 @@ namespace Explorer
             {
                 listFileFolder.Add(new InfoPaste(PathNow, item.Text, (item.SubItems[2].Text == "Folder" ? false : true)));
             }
+            pasteToolStripMenuItem.Enabled = true;
 
         }
 
@@ -422,6 +402,7 @@ namespace Explorer
 
             if (iTypePaste == TypePaste.CUT)
             {
+                pasteToolStripMenuItem.Enabled = false;
                 // Nếu thư mục cut = thư mục hiện tại thì bỏ qua.
                 if (listFileFolder[0].PathFolder == PathNow)
                 {
@@ -480,66 +461,6 @@ namespace Explorer
                         DirectoryCopy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + FileName);
                     }
                 }
-
-                //if (listFileFolder[0].PathFolder == PathNow)
-                //{
-                //    foreach (var item in listFileFolder)
-                //    {
-                //        if (item.isFile)
-                //        {
-                //            string NewFileName = item.Name;
-                //            for (int i = item.Name.Length - 1; i >= 0; i--)
-                //            {
-                //                if (item.Name[i] == '.')
-                //                {
-                //                    NewFileName = item.Name.Insert(i, " - copy");
-                //                    break;
-                //                }
-                //                else if (i == 0)
-                //                {
-                //                    NewFileName = item.Name + " - copy";
-                //                }
-                //            }
-                //            File.Copy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + NewFileName);
-                //            Console.WriteLine($"Copy File from {item.PathFolder}\\{item.Name} to {PathNow}\\{NewFileName}");
-                //        }
-                //        else
-                //        {
-                //            Console.WriteLine($"Copy Dir from {item.PathFolder}\\{item.Name} to {PathNow}\\{item.Name} - copy");
-                //            DirectoryCopy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + item.Name + " - copy");
-                //        }
-                //    }
-
-
-                //}
-                //else
-                //{
-                //    foreach (var item in listFileFolder)
-                //    {
-                //        if (item.isFile)
-                //        {
-                //            string FileName = item.Name;
-
-                //            while (listView1.FindItemWithText(FileName) != null)
-                //            {
-                //                FileName = GetNameFileCopy(FileName, true);
-                //            }
-                //            File.Copy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + FileName);
-                //            Console.WriteLine($"Copy File from {item.PathFolder}\\{item.Name} to {PathNow}\\{FileName}");
-                //        }
-                //        else
-                //        {
-                //            string FileName = item.Name;
-
-                //            while (listView1.FindItemWithText(FileName) != null)
-                //            {
-                //                FileName = GetNameFileCopy(FileName, true);
-                //            }
-                //            Console.WriteLine($"Copy Dir from {item.PathFolder}\\{item.Name} to {PathNow}\\{FileName}");
-                //            DirectoryCopy(item.PathFolder + "\\" + item.Name, PathNow + "\\" + FileName);
-                //        }
-                //    }
-                //}
             }
 
             LoadListView(PathNow);
@@ -618,6 +539,8 @@ namespace Explorer
             {
                 listFileFolder.Add(new InfoPaste(PathNow, item.Text, (item.SubItems[2].Text == "Folder" ? false : true)));
             }
+
+            pasteToolStripMenuItem.Enabled = true;
         }
 
         private void tsb_Coppy_Click(object sender, EventArgs e)
@@ -643,27 +566,28 @@ namespace Explorer
                 if (item.SubItems[2].Text == "Folder")
                 {
                     Directory.Delete(PathNow + "\\" + item.Text, true);
-                    button1_Click(btnRefresh, EventArgs.Empty);
                 }
                 else
                 {
-                    LoadListView(PathNow);
                     File.Delete(PathNow + "\\" + item.Text);
                 }
             }
+            button1_Click(btnRefresh, EventArgs.Empty);
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string PathNowtemp = PathNow;
+            txtPath.Text = PathNow;
+            //string PathNowtemp = PathNow;
             while (treeView1.Nodes.Count > 0)
             {
                 treeView1.Nodes.RemoveAt(0);
             }
-            listView1.Items.Clear();
+
             InitTreeView();
-            LoadListView(PathNowtemp);
+            listView1.Items.Clear();
+            LoadListView(txtPath.Text);
         }
 
         private void txtPath_KeyDown(object sender, KeyEventArgs e)
@@ -696,6 +620,15 @@ namespace Explorer
             listView1.Update();
             listView1_KeyDown(listView1, new KeyEventArgs(Keys.F2));
 
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            bool btemp = (listView1.SelectedItems.Count == 0 ? false : true);
+
+            cutToolStripMenuItem.Enabled = btemp;
+            copyToolStripMenuItem.Enabled = btemp;
+            deleteToolStripMenuItem.Enabled = btemp;
         }
     }
 

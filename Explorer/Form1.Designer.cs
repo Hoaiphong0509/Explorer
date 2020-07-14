@@ -47,8 +47,8 @@
             this.ch_Type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,16 +57,11 @@
             this.tc_Menu1 = new System.Windows.Forms.TabControl();
             this.tb_Home = new System.Windows.Forms.TabPage();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.tsb_Coppy = new System.Windows.Forms.ToolStripButton();
             this.tsb_Cut = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Coppy = new System.Windows.Forms.ToolStripButton();
             this.tsb_Paste = new System.Windows.Forms.ToolStripButton();
             this.tsb_Delete = new System.Windows.Forms.ToolStripButton();
             this.tb_View = new System.Windows.Forms.TabPage();
-            this.cbShowHidden = new System.Windows.Forms.CheckBox();
-            this.cbShowImage = new System.Windows.Forms.CheckBox();
-            this.cbShowOther = new System.Windows.Forms.CheckBox();
-            this.cbShowFolder = new System.Windows.Forms.CheckBox();
-            this.lbView = new System.Windows.Forms.Label();
             this.rb_Largeicon = new System.Windows.Forms.RadioButton();
             this.rb_Smallicon = new System.Windows.Forms.RadioButton();
             this.rb_Title = new System.Windows.Forms.RadioButton();
@@ -118,7 +113,6 @@
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(198, 374);
             this.treeView1.TabIndex = 0;
-            this.treeView1.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
             // 
@@ -252,20 +246,14 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem,
             this.cutToolStripMenuItem,
+            this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.newFolderToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(135, 114);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // cutToolStripMenuItem
             // 
@@ -274,8 +262,16 @@
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
             // pasteToolStripMenuItem
             // 
+            this.pasteToolStripMenuItem.Enabled = false;
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
@@ -352,16 +348,6 @@
             this.bindingNavigator1.TabIndex = 0;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
-            // tsb_Coppy
-            // 
-            this.tsb_Coppy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsb_Coppy.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Coppy.Image")));
-            this.tsb_Coppy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Coppy.Name = "tsb_Coppy";
-            this.tsb_Coppy.Size = new System.Drawing.Size(34, 46);
-            this.tsb_Coppy.Text = "Coppy";
-            this.tsb_Coppy.Click += new System.EventHandler(this.tsb_Coppy_Click);
-            // 
             // tsb_Cut
             // 
             this.tsb_Cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -371,6 +357,16 @@
             this.tsb_Cut.Size = new System.Drawing.Size(34, 46);
             this.tsb_Cut.Text = "Cut";
             this.tsb_Cut.Click += new System.EventHandler(this.tsb_Cut_Click);
+            // 
+            // tsb_Coppy
+            // 
+            this.tsb_Coppy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Coppy.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Coppy.Image")));
+            this.tsb_Coppy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Coppy.Name = "tsb_Coppy";
+            this.tsb_Coppy.Size = new System.Drawing.Size(34, 46);
+            this.tsb_Coppy.Text = "Coppy";
+            this.tsb_Coppy.Click += new System.EventHandler(this.tsb_Coppy_Click);
             // 
             // tsb_Paste
             // 
@@ -394,11 +390,6 @@
             // 
             // tb_View
             // 
-            this.tb_View.Controls.Add(this.cbShowHidden);
-            this.tb_View.Controls.Add(this.cbShowImage);
-            this.tb_View.Controls.Add(this.cbShowOther);
-            this.tb_View.Controls.Add(this.cbShowFolder);
-            this.tb_View.Controls.Add(this.lbView);
             this.tb_View.Controls.Add(this.rb_Largeicon);
             this.tb_View.Controls.Add(this.rb_Smallicon);
             this.tb_View.Controls.Add(this.rb_Title);
@@ -410,56 +401,6 @@
             this.tb_View.TabIndex = 1;
             this.tb_View.Text = "View";
             this.tb_View.UseVisualStyleBackColor = true;
-            // 
-            // cbShowHidden
-            // 
-            this.cbShowHidden.AutoSize = true;
-            this.cbShowHidden.Location = new System.Drawing.Point(242, 7);
-            this.cbShowHidden.Name = "cbShowHidden";
-            this.cbShowHidden.Size = new System.Drawing.Size(60, 17);
-            this.cbShowHidden.TabIndex = 9;
-            this.cbShowHidden.Text = "Hidden";
-            this.cbShowHidden.UseVisualStyleBackColor = true;
-            // 
-            // cbShowImage
-            // 
-            this.cbShowImage.AutoSize = true;
-            this.cbShowImage.Location = new System.Drawing.Point(304, 7);
-            this.cbShowImage.Name = "cbShowImage";
-            this.cbShowImage.Size = new System.Drawing.Size(55, 17);
-            this.cbShowImage.TabIndex = 8;
-            this.cbShowImage.Text = "Image";
-            this.cbShowImage.UseVisualStyleBackColor = true;
-            // 
-            // cbShowOther
-            // 
-            this.cbShowOther.AutoSize = true;
-            this.cbShowOther.Location = new System.Drawing.Point(243, 30);
-            this.cbShowOther.Name = "cbShowOther";
-            this.cbShowOther.Size = new System.Drawing.Size(52, 17);
-            this.cbShowOther.TabIndex = 7;
-            this.cbShowOther.Text = "Other";
-            this.cbShowOther.UseVisualStyleBackColor = true;
-            // 
-            // cbShowFolder
-            // 
-            this.cbShowFolder.AutoSize = true;
-            this.cbShowFolder.Location = new System.Drawing.Point(304, 30);
-            this.cbShowFolder.Name = "cbShowFolder";
-            this.cbShowFolder.Size = new System.Drawing.Size(55, 17);
-            this.cbShowFolder.TabIndex = 6;
-            this.cbShowFolder.Text = "Folder";
-            this.cbShowFolder.UseVisualStyleBackColor = true;
-            // 
-            // lbView
-            // 
-            this.lbView.AutoSize = true;
-            this.lbView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbView.Location = new System.Drawing.Point(195, 5);
-            this.lbView.Name = "lbView";
-            this.lbView.Size = new System.Drawing.Size(41, 16);
-            this.lbView.TabIndex = 5;
-            this.lbView.Text = "Show";
             // 
             // rb_Largeicon
             // 
@@ -572,11 +513,6 @@
         private System.Windows.Forms.RadioButton rb_Title;
         private System.Windows.Forms.RadioButton rb_Details;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.CheckBox cbShowImage;
-        private System.Windows.Forms.CheckBox cbShowOther;
-        private System.Windows.Forms.CheckBox cbShowFolder;
-        private System.Windows.Forms.Label lbView;
-        private System.Windows.Forms.CheckBox cbShowHidden;
         private System.Windows.Forms.Button btnGoto;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
