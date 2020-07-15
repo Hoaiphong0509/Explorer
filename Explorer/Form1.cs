@@ -336,7 +336,7 @@ namespace Explorer
             {
                 listFileFolder.Add(new InfoPaste(PathNow, item.Text, (item.SubItems[2].Text == "Folder" ? false : true)));
             }
-            pasteToolStripMenuItem.Enabled = true;
+            pasteToolStripMenuItem.Enabled = tsb_Paste.Enabled = true;
 
         }
 
@@ -402,7 +402,7 @@ namespace Explorer
 
             if (iTypePaste == TypePaste.CUT)
             {
-                pasteToolStripMenuItem.Enabled = false;
+                pasteToolStripMenuItem.Enabled = tsb_Paste.Enabled = false;
                 // Nếu thư mục cut = thư mục hiện tại thì bỏ qua.
                 if (listFileFolder[0].PathFolder == PathNow)
                 {
@@ -540,7 +540,7 @@ namespace Explorer
                 listFileFolder.Add(new InfoPaste(PathNow, item.Text, (item.SubItems[2].Text == "Folder" ? false : true)));
             }
 
-            pasteToolStripMenuItem.Enabled = true;
+            pasteToolStripMenuItem.Enabled = tsb_Paste.Enabled = true;
         }
 
         private void tsb_Coppy_Click(object sender, EventArgs e)
@@ -560,26 +560,37 @@ namespace Explorer
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            bool DelFolder = false;
             if (listView1.SelectedItems.Count == 0) return;
             foreach (ListViewItem item in listView1.SelectedItems)
             {
                 if (item.SubItems[2].Text == "Folder")
                 {
                     Directory.Delete(PathNow + "\\" + item.Text, true);
+                    DelFolder = true;
                 }
                 else
                 {
                     File.Delete(PathNow + "\\" + item.Text);
                 }
             }
-            button1_Click(btnRefresh, EventArgs.Empty);
+
+            if (DelFolder)
+            {
+                button1_Click(btnRefresh, EventArgs.Empty);
+            }
+            else
+            {
+                LoadListView(PathNow);
+            }
+            
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtPath.Text = PathNow;
-            //string PathNowtemp = PathNow;
+            //txtPath.Text = PathNow;
+            string PathNowtemp = PathNow;
             while (treeView1.Nodes.Count > 0)
             {
                 treeView1.Nodes.RemoveAt(0);
@@ -587,7 +598,7 @@ namespace Explorer
 
             InitTreeView();
             listView1.Items.Clear();
-            LoadListView(txtPath.Text);
+            LoadListView(PathNowtemp);
         }
 
         private void txtPath_KeyDown(object sender, KeyEventArgs e)
@@ -624,11 +635,12 @@ namespace Explorer
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            bool btemp = (listView1.SelectedItems.Count == 0 ? false : true);
+            cutToolStripMenuItem.Enabled = copyToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled = tsb_Cut.Enabled;
+        }
 
-            cutToolStripMenuItem.Enabled = btemp;
-            copyToolStripMenuItem.Enabled = btemp;
-            deleteToolStripMenuItem.Enabled = btemp;
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tsb_Cut.Enabled = tsb_Coppy.Enabled = tsb_Delete.Enabled = listView1.SelectedItems.Count > 0;
         }
     }
 

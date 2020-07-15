@@ -221,6 +221,7 @@
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listView1_AfterLabelEdit);
             this.listView1.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             this.listView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView1_KeyDown);
             // 
             // ch_name
@@ -351,6 +352,7 @@
             // tsb_Cut
             // 
             this.tsb_Cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Cut.Enabled = false;
             this.tsb_Cut.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Cut.Image")));
             this.tsb_Cut.ImageTransparentColor = System.Drawing.Color.White;
             this.tsb_Cut.Name = "tsb_Cut";
@@ -361,6 +363,7 @@
             // tsb_Coppy
             // 
             this.tsb_Coppy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Coppy.Enabled = false;
             this.tsb_Coppy.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Coppy.Image")));
             this.tsb_Coppy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Coppy.Name = "tsb_Coppy";
@@ -371,6 +374,7 @@
             // tsb_Paste
             // 
             this.tsb_Paste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Paste.Enabled = false;
             this.tsb_Paste.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Paste.Image")));
             this.tsb_Paste.ImageTransparentColor = System.Drawing.Color.White;
             this.tsb_Paste.Name = "tsb_Paste";
@@ -381,6 +385,7 @@
             // tsb_Delete
             // 
             this.tsb_Delete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsb_Delete.Enabled = false;
             this.tsb_Delete.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Delete.Image")));
             this.tsb_Delete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Delete.Name = "tsb_Delete";
