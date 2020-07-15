@@ -243,7 +243,18 @@ namespace Explorer
                 }
                 else
                 {
-                    MessageBox.Show("Bạn chỉ có thể mở file ảnh với các đuôi : BMP, GIF, JPG, JPEG, PNG, JFIF", "Lỗi mở file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (MessageBox.Show("Bạn đang mở không phải file ảnh. File ảnh có các định dạng sau : BMP, GIF, JPG, JPEG, PNG, JFIF\nBạn có muốn tiếp tục ?", "Mở file khác.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            Process.Start(fileInfo.FullName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Lỗi : " + ex.Message, "Lỗi");
+                        }
+                        
+                    }
                 }
             }
         }
